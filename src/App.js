@@ -5,22 +5,26 @@ const Header = ({ course }) => {
   return <h1>{course.name}</h1>;
 };
 
-const Part = ({ course }) => {
-  console.log("Part props =", course);
-  return (
-    <div>
-      {course.name} {course.exercises}
-    </div>
-  );
-};
+// const Part = ({ course }) => {
+//   console.log("Part props =", course);
+//   return (
+//     <div>
+//       {course.name} {course.exercises}
+//     </div>
+//   );
+// };
 
 const Content = ({ course }) => {
   console.log("Content props =", course);
   return (
     <div>
-      <Part course={course.parts[0]} />
-      <Part course={course.parts[1]} />
-      <Part course={course.parts[2]} />
+      {course.parts.map((part) => {
+        return (
+          <p key={part.id}>
+            {part.name} {part.exercises}
+          </p>
+        );
+      })}
     </div>
   );
 };
