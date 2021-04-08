@@ -29,12 +29,18 @@ const Content = ({ course }) => {
   );
 };
 
-const Course = ({ course }) => {
+const Total = ({ course, total }) => {
+  console.log("Total props =", course);
+  return <div>total of {total} exercises</div>;
+};
+
+const Course = ({ course, total }) => {
   console.log("Course props =", course);
   return (
     <div>
       <Header course={course} />
       <Content course={course} />
+      <Total course={course} total={total} />
     </div>
   );
 };
@@ -59,10 +65,20 @@ const App = () => {
         exercises: 14,
         id: 3,
       },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
+      },
     ],
   };
 
-  return <Course course={course} />;
+  const total = course.parts.reduce((s, p) => {
+    console.log("total, current", s, p);
+    return s + p.exercises;
+  }, 0);
+
+  return <Course course={course} total ={total}/>;
 };
 
 export default App;
