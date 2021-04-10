@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Numbers = ({ person }) => {
-  console.log("Numbers props =", person);
+  //  console.log("Numbers props =", person);
   return <p> {person.name}</p>;
 };
 
@@ -14,8 +14,13 @@ const App = () => {
     const personObject = {
       name: newName,
     };
-    setPersons(persons.concat(personObject));
-    setNewName("");
+    const exists = persons.some((person) => person.name === newName);
+    if (!exists) {
+      setPersons(persons.concat(personObject));
+      setNewName("");
+    } else {
+      window.alert(`${newName} is already in the phonebook`);
+    }
   };
 
   const handleNameChange = (event) => {
@@ -30,7 +35,7 @@ const App = () => {
         <div>
           name: <input value={newName} onChange={handleNameChange} />
         </div>
-
+        <div>debug: {newName}</div>
         <div>
           <button type='submit'>add</button>
         </div>
