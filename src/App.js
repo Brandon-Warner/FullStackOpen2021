@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-
-const Numbers = ({ person }) => {
-  //  console.log("Numbers props =", person);
-  return (
-    <p>
-      {person.name} {person.number}
-    </p>
-  );
-};
+import Persons from "./components/Persons";
+import Filter from "./components/Filter";
+import Form from "./components/Form";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -45,11 +39,6 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
-  const capitalize = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
-  console.log(capitalize("brandon"));
-
   const handleSearch = (event) => {
     console.log(event.target.value);
     setNewSearch(event.target.value);
@@ -64,6 +53,8 @@ const App = () => {
 
       newList = oldList.filter((person) => {
         if (person.name.includes(newSearch)) {
+          console.log("newName=", person.name);
+
           return { name: person.name, number: person.number };
         }
         return "";
@@ -78,28 +69,18 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
-      <div>
-        search: <input value={newSearch} onChange={handleSearch} />
-      </div>
+      <Filter newSearch={newSearch} handleSearch={handleSearch} />
       <h2>Add New Contact</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-
-        <div>
-          <button type='submit'>add</button>
-        </div>
-      </form>
+      <Form
+        addPerson={addPerson}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
 
       <h2>Numbers</h2>
-      {persons.map((person) => (
-        <Numbers person={person} key={person.name} />
-      ))}
+      <Persons persons={persons} />
     </div>
   );
 };
