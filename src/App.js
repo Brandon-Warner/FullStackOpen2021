@@ -14,6 +14,16 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
 
+  const capitalize = (input) => {
+    return input
+      .toLowerCase()
+      .split(" ")
+      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(" ");
+  };
+
+  console.log("capitalize test: ", capitalize("brandon warner"));
+
   const addPerson = (event) => {
     event.preventDefault();
     const personObject = {
@@ -54,7 +64,7 @@ const App = () => {
       newList = oldList.filter((person) => {
         if (person.name.includes(newSearch)) {
           console.log("newName=", person.name);
-
+          person.name = capitalize(person.name);
           return { name: person.name, number: person.number };
         }
         return "";
