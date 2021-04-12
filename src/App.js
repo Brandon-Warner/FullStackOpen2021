@@ -14,15 +14,15 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
 
-  const capitalize = (input) => {
-    return input
+  const capitalize = (str) => {
+    return str
       .toLowerCase()
       .split(" ")
-      .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+      .map((x) => x.charAt(0).toUpperCase() + x.substring(1))
       .join(" ");
   };
 
-  console.log("capitalize test: ", capitalize("brandon warner"));
+  //console.log("capitalize test: ", capitalize("brandon warner"));
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -53,15 +53,15 @@ const App = () => {
     console.log(event.target.value);
     setNewSearch(event.target.value);
     console.log("search =", newSearch);
-    let oldList = persons.map((person) => {
+    let oldPersons = persons.map((person) => {
       return { name: person.name.toLowerCase(), number: person.number };
     });
-    console.log("oldList =", oldList);
+    console.log("oldPersons =", oldPersons);
     if (event !== "") {
-      let newList = [];
+      let newPersons = [];
       setNewSearch(event.target.value.toLowerCase());
 
-      newList = oldList.filter((person) => {
+      newPersons = oldPersons.filter((person) => {
         if (person.name.includes(newSearch)) {
           console.log("newName=", person.name);
           person.name = capitalize(person.name);
@@ -69,8 +69,8 @@ const App = () => {
         }
         return "";
       });
-      console.log("newList =", newList);
-      setPersons(newList);
+      console.log("newPersons =", newPersons);
+      setPersons(newPersons);
     } else {
       setPersons(persons);
     }
