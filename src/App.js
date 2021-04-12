@@ -19,7 +19,6 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
-  const [filterDisplay, setFilterDisplay] = useState(persons);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -46,8 +45,12 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  const capitalize = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+  console.log(capitalize("brandon"));
+
   const handleSearch = (event) => {
-    event.preventDefault();
     console.log(event.target.value);
     setNewSearch(event.target.value);
     console.log("search =", newSearch);
@@ -57,7 +60,7 @@ const App = () => {
     console.log("oldList =", oldList);
     if (event !== "") {
       let newList = [];
-      setNewSearch(event.target.value);
+      setNewSearch(event.target.value.toLowerCase());
 
       newList = oldList.filter((person) => {
         if (person.name.includes(newSearch)) {
@@ -66,12 +69,11 @@ const App = () => {
         return "";
       });
       console.log("newList =", newList);
-      setFilterDisplay(newList);
+      setPersons(newList);
     } else {
-      setFilterDisplay(persons);
+      setPersons(persons);
     }
   };
-  console.log("filterDisplay =", filterDisplay);
 
   return (
     <div>
@@ -80,7 +82,7 @@ const App = () => {
       <div>
         search: <input value={newSearch} onChange={handleSearch} />
       </div>
-
+      <h2>Add New Contact</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
@@ -95,7 +97,7 @@ const App = () => {
       </form>
 
       <h2>Numbers</h2>
-      {filterDisplay.map((person) => (
+      {persons.map((person) => (
         <Numbers person={person} key={person.name} />
       ))}
     </div>
