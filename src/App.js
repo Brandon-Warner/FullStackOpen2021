@@ -12,9 +12,14 @@ const Numbers = ({ person }) => {
 const App = () => {
   const [persons, setPersons] = useState([
     { name: "Arto Hellas", number: "503 - 620 - 5558" },
+    { name: "Ada Lovelace", number: "39-44-5323523" },
+    { name: "Dan Abramov", number: "12-43-234345" },
+    { name: "Mary Poppendieck", number: "39-23-6423122" },
   ]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [newSearch, setNewSearch] = useState("");
+  const [filterDisplay, setFilterDisplay] = useState(persons);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -41,9 +46,41 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+    console.log(event.target.value);
+    setNewSearch(event.target.value);
+    console.log("search =", newSearch);
+    let oldList = persons.map((person) => {
+      return { name: person.name.toLowerCase(), number: person.number };
+    });
+    console.log("oldList =", oldList);
+    if (event !== "") {
+      let newList = [];
+      setNewSearch(event.target.value);
+
+      newList = oldList.filter((person) => {
+        if (person.name.includes(newSearch)) {
+          return { name: person.name, number: person.number };
+        }
+        return "";
+      });
+      console.log("newList =", newList);
+      setFilterDisplay(newList);
+    } else {
+      setFilterDisplay(persons);
+    }
+  };
+  console.log("filterDisplay =", filterDisplay);
+
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <div>
+        search: <input value={newSearch} onChange={handleSearch} />
+      </div>
+
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
@@ -51,15 +88,14 @@ const App = () => {
         <div>
           number: <input value={newNumber} onChange={handleNumberChange} />
         </div>
-        <div>
-          debug: {newName} {newNumber}
-        </div>
+
         <div>
           <button type='submit'>add</button>
         </div>
       </form>
+
       <h2>Numbers</h2>
-      {persons.map((person) => (
+      {filterDisplay.map((person) => (
         <Numbers person={person} key={person.name} />
       ))}
     </div>
