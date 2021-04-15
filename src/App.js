@@ -42,7 +42,7 @@ const App = () => {
     let countryList = countries.map((country) => {
       return { name: country.name.toLowerCase() };
     });
-    console.log("countryList =", countryList);
+    // console.log("countryList =", countryList);
 
     if (event !== "") {
       let newCountryList = [];
@@ -56,10 +56,17 @@ const App = () => {
         }
         return "";
       });
-      console.log("newCountryList =", newCountryList);
-      setDisplay(newCountryList);
+
+      if (newCountryList.length > 10) {
+        setDisplay([{ name: "Too many matches, please be more specific" }]);
+      } else if (newCountryList.length === 0) {
+        setDisplay([{ name: "No matches to your search" }]);
+      } else {
+        setDisplay(newCountryList);
+      }
+      // console.log("newCountryList =", newCountryList);
     } else {
-      setDisplay("nothing to see here");
+      setDisplay({ name: "nothing to see here" });
     }
   };
 
