@@ -1,19 +1,15 @@
 import React from "react";
 
-const Numbers = ({ person }) => {
-  return (
-    <p>
-      {person.name} {person.number}
-    </p>
-  );
-};
-
 const Persons = ({ persons }) => {
   return (
     <div>
-      {persons.map((person) => (
-        <Numbers person={person} key={person.name} />
-      ))}
+      <ul>
+        {persons.map((person) => (
+          <li key={`${person.id}`}>
+            {person.name} {person.number}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

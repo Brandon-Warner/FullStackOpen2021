@@ -11,13 +11,10 @@ const App = () => {
   const [newSearch, setNewSearch] = useState("");
 
   useEffect(() => {
-    console.log("effect");
     axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
       setPersons(response.data);
     });
   }, []);
-  console.log("rendered", persons.length, "persons");
 
   const capitalize = (str) => {
     return str
@@ -37,44 +34,49 @@ const App = () => {
     };
     const exists = persons.some((person) => person.name === newName);
     if (!exists) {
-      setPersons(persons.concat(personObject));
-      setNewName("");
-      setNewNumber("");
+      axios
+        .post("http://localhost:3001/persons", personObject)
+        .then((response) => {
+          console.log("server post = ", response);
+          setPersons(persons.concat(response.data));
+          setNewName("");
+          setNewNumber("");
+        });
     } else {
       window.alert(`${newName} is already in the phonebook`);
     }
   };
 
   const handleNameChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setNewName(event.target.value);
   };
   const handleNumberChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setNewNumber(event.target.value);
   };
 
   const handleSearch = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setNewSearch(event.target.value);
-    console.log("search =", newSearch);
+    // console.log("search =", newSearch);
     let oldPersons = persons.map((person) => {
       return { name: person.name.toLowerCase(), number: person.number };
     });
-    console.log("oldPersons =", oldPersons);
+    // console.log("oldPersons =", oldPersons);
     if (event !== "") {
       let newPersons = [];
       setNewSearch(event.target.value.toLowerCase());
 
       newPersons = oldPersons.filter((person) => {
         if (person.name.includes(newSearch)) {
-          console.log("newName=", person.name);
+          // console.log("newName=", person.name);
           person.name = capitalize(person.name);
           return { name: person.name, number: person.number };
         }
         return "";
       });
-      console.log("newPersons =", newPersons);
+      // console.log("newPersons =", newPersons);
       setPersons(newPersons);
     } else {
       setPersons(persons);
