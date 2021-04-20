@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import Form from "./components/Form";
-import axios from "axios";
+import noteService from "./services/phonebook.js";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,7 +11,7 @@ const App = () => {
   const [newSearch, setNewSearch] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
+    noteService.getAll().then((response) => {
       setPersons(response.data);
     });
   }, []);
@@ -34,14 +34,12 @@ const App = () => {
     };
     const exists = persons.some((person) => person.name === newName);
     if (!exists) {
-      axios
-        .post("http://localhost:3001/persons", personObject)
-        .then((response) => {
-          console.log("server post = ", response);
-          setPersons(persons.concat(response.data));
-          setNewName("");
-          setNewNumber("");
-        });
+      noteService.create(personObject).then((response) => {
+        console.log("server post = ", response);
+        setPersons(persons.concat(response.data));
+        setNewName("");
+        setNewNumber("");
+      });
     } else {
       window.alert(`${newName} is already in the phonebook`);
     }
@@ -57,29 +55,45 @@ const App = () => {
   };
 
   const handleSearch = (event) => {
-    // console.log(event.target.value);
     setNewSearch(event.target.value);
-    // console.log("search =", newSearch);
+
     let oldPersons = persons.map((person) => {
-      return { name: person.name.toLowerCase(), number: person.number };
+      return {
+        name: person.name.toLowerCase(),
+        number: person.number,
+        id: person.id,
+      };
     });
-    // console.log("oldPersons =", oldPersons);
+
     if (event !== "") {
       let newPersons = [];
       setNewSearch(event.target.value.toLowerCase());
 
       newPersons = oldPersons.filter((person) => {
         if (person.name.includes(newSearch)) {
-          // console.log("newName=", person.name);
           person.name = capitalize(person.name);
-          return { name: person.name, number: person.number };
+          return { name: person.name, number: person.number, id: person.id };
         }
         return "";
       });
-      // console.log("newPersons =", newPersons);
+
       setPersons(newPersons);
     } else {
       setPersons(persons);
+    }
+  };
+
+  const removeThisPerson = (id) => {
+    const person = persons.find((person) => person.id === id);
+
+    if (window.confirm(`Delete ${person.name}?`)) {
+      noteService
+        .remove(id)
+        .then((response) => console.log(response.data))
+        .catch((error) => {
+          console.log("error:", error);
+        });
+      noteService.getAll().then((response) => setPersons(response.data));
     }
   };
 
@@ -97,7 +111,17 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <div>
+        <ul>
+          {persons.map((person) => (
+            <Persons
+              key={person.id}
+              person={person}
+              removePerson={() => removeThisPerson(person.id)}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
