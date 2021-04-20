@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "111 - 111 - 2222",
+      "number": "222 - 222 - 2222",
       "id": 1
     },
     {
@@ -22,18 +22,8 @@
     },
     {
       "name": "Brandon Warner",
-      "number": "000 - 000 - 0000",
+      "number": "503 - 724 - 6466",
       "id": 5
-    },
-    {
-      "name": "Chris Warner",
-      "number": "503 - 724 - 6994",
-      "id": 6
-    },
-    {
-      "name": "Colt Lyerla",
-      "number": "911 - 911 - 9191",
-      "id": 7
     }
   ]
 }

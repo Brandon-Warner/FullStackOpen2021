@@ -11,8 +11,8 @@ const App = () => {
   const [newSearch, setNewSearch] = useState("");
 
   useEffect(() => {
-    noteService.getAll().then((response) => {
-      setPersons(response.data);
+    noteService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -24,8 +24,6 @@ const App = () => {
       .join(" ");
   };
 
-  //console.log("capitalize test: ", capitalize("brandon warner"));
-
   const addPerson = (event) => {
     event.preventDefault();
     const personObject = {
@@ -35,9 +33,8 @@ const App = () => {
     const existsNumber = persons.some((person) => person.number === newNumber);
     const existsName = persons.some((person) => person.name === newName);
     if (!existsName) {
-      noteService.create(personObject).then((response) => {
-        console.log("server post = ", response);
-        setPersons(persons.concat(response.data));
+      noteService.create(personObject).then((addedPerson) => {
+        setPersons(persons.concat(addedPerson));
         setNewName("");
         setNewNumber("");
       });
@@ -49,13 +46,13 @@ const App = () => {
       ) {
         const person = persons.find((person) => person.name === newName);
         const changedPerson = { ...person, number: newNumber };
-        // console.log(changedPerson);
+
         noteService
           .update(person.id, changedPerson)
-          .then((response) => {
+          .then((updatedNumber) => {
             setPersons(
               persons.map((person) =>
-                person.name !== newName ? person : response.data
+                person.name !== newName ? person : updatedNumber
               )
             );
           })
@@ -66,11 +63,9 @@ const App = () => {
     }
   };
   const handleNameChange = (event) => {
-    // console.log(event.target.value);
     setNewName(event.target.value);
   };
   const handleNumberChange = (event) => {
-    // console.log(event.target.value);
     setNewNumber(event.target.value);
   };
 
@@ -109,11 +104,11 @@ const App = () => {
     if (window.confirm(`Delete ${person.name}?`)) {
       noteService
         .remove(id)
-        .then((response) => console.log(response.data))
+        .then((removedPerson) => console.log(removedPerson))
         .catch((error) => {
           console.log("error:", error);
         });
-      noteService.getAll().then((response) => setPersons(response.data));
+      noteService.getAll().then((updatedPersons) => setPersons(updatedPersons));
     }
   };
 
