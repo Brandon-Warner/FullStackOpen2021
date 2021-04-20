@@ -32,19 +32,39 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
-    const exists = persons.some((person) => person.name === newName);
-    if (!exists) {
+    const existsNumber = persons.some((person) => person.number === newNumber);
+    const existsName = persons.some((person) => person.name === newName);
+    if (!existsName) {
       noteService.create(personObject).then((response) => {
         console.log("server post = ", response);
         setPersons(persons.concat(response.data));
         setNewName("");
         setNewNumber("");
       });
-    } else {
+    } else if (existsName && !existsNumber) {
+      if (
+        window.confirm(
+          `This contact is already added to phonebook, replace old number with new one?`
+        )
+      ) {
+        const person = persons.find((person) => person.name === newName);
+        const changedPerson = { ...person, number: newNumber };
+        // console.log(changedPerson);
+        noteService
+          .update(person.id, changedPerson)
+          .then((response) => {
+            setPersons(
+              persons.map((person) =>
+                person.name !== newName ? person : response.data
+              )
+            );
+          })
+          .catch((error) => console.log("error", error));
+      }
+    } else if (existsName) {
       window.alert(`${newName} is already in the phonebook`);
     }
   };
-
   const handleNameChange = (event) => {
     // console.log(event.target.value);
     setNewName(event.target.value);
