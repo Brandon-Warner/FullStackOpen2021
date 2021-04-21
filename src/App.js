@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import Form from "./components/Form";
+import Message from "./components/Message";
 import noteService from "./services/phonebook.js";
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
+  const [newMessage, setNewMessage] = useState("Here is the message");
 
   useEffect(() => {
     noteService.getAll().then((initialPersons) => {
@@ -35,6 +37,10 @@ const App = () => {
     if (!existsName) {
       noteService.create(personObject).then((addedPerson) => {
         setPersons(persons.concat(addedPerson));
+        setNewMessage(`${personObject.name} was added to phonebook`);
+        setTimeout(() => {
+          setNewMessage(null);
+        }, 5000);
         setNewName("");
         setNewNumber("");
       });
@@ -114,7 +120,8 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Message message={newMessage} />
       <Filter newSearch={newSearch} handleSearch={handleSearch} />
       <h2>Add New Contact</h2>
       <Form
