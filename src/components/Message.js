@@ -10,15 +10,31 @@ const Message = ({ message }) => {
     padding: "10",
     marginBottom: "20",
   };
+  const errorStyle = {
+    color: "red",
+    background: "lightGrey",
+    fontSize: "20",
+    borderStyle: "solid",
+    borderRadius: "5",
+    padding: "10",
+    marginBottom: "20",
+  };
 
   if (message === null) {
     return null;
   }
-  return (
-    <div style={messageStyle} className='message'>
-      {message}
-    </div>
-  );
+  if (message.includes("removed")) {
+    return (
+      <div style={errorStyle} className='message'>
+        {message}
+      </div>
+    );
+  } else {
+    return (
+      <div style={messageStyle} className='message'>
+        {message}
+      </div>
+    );
+  }
 };
-
 export default Message;

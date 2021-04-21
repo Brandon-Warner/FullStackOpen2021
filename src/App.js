@@ -10,7 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
-  const [newMessage, setNewMessage] = useState("Here is the message");
+  const [newMessage, setNewMessage] = useState(null);
 
   useEffect(() => {
     noteService.getAll().then((initialPersons) => {
@@ -62,7 +62,15 @@ const App = () => {
               )
             );
           })
-          .catch((error) => console.log("error", error));
+          .catch((error) => {
+            console.log(error);
+            setNewMessage(
+              `${person.name}'s contact information has already been removed`
+            );
+            setTimeout(() => {
+              setNewMessage(null);
+            }, 5000);
+          });
       }
     } else if (existsName) {
       window.alert(`${newName} is already in the phonebook`);
