@@ -36,6 +36,7 @@ app.get("/info", (request, response) => {
 });
 
 app.get("/api/persons", (request, response) => {
+  console.log(persons);
   response.json(persons);
 });
 
@@ -56,13 +57,21 @@ const newId = () => {
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
+  console.log("body.name=", body.name);
 
-  console.log(body);
-  if (!body) {
+  const existingName = persons.find((person) => person.name === body.name);
+
+  if (!body.name || !body.number) {
     return response.status(400).json({
-      error: "name missing",
+      error: "not enough info to create contact",
     });
   }
+  if (existingName) {
+    return response.status(400).json({
+      error: "name already exists in phonebook",
+    });
+  }
+
   const person = {
     id: newId(),
     name: body.name,
