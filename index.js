@@ -1,7 +1,14 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 
 app.use(express.json());
+
+app.use(morgan("tiny"));
+
+// morgan.token("newObject", function (req, res) {
+//   JSON.stringify(req);
+// });
 
 let persons = [
   {
@@ -36,7 +43,7 @@ app.get("/info", (request, response) => {
 });
 
 app.get("/api/persons", (request, response) => {
-  console.log(persons);
+  // console.log(persons);
   response.json(persons);
 });
 
@@ -57,7 +64,7 @@ const newId = () => {
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
-  console.log("body.name=", body.name);
+  // console.log("body.name=", body.name);
 
   const existingName = persons.find((person) => person.name === body.name);
 
@@ -78,7 +85,7 @@ app.post("/api/persons", (request, response) => {
     number: body.number,
   };
 
-  console.log("person =", person);
+  // console.log("person =", person);
 
   persons = persons.concat(person);
 
