@@ -4,11 +4,12 @@ const app = express();
 
 app.use(express.json());
 
-app.use(morgan("tiny"));
+// app.use(morgan("tiny"));
 
-// morgan.token("newObject", function (req, res) {
-//   JSON.stringify(req);
-// });
+morgan.token("body", (req, res) => JSON.stringify(req.body));
+app.use(
+  morgan(":method :url :status :response-time ms - :res[content-length] :body")
+);
 
 let persons = [
   {
@@ -43,7 +44,6 @@ app.get("/info", (request, response) => {
 });
 
 app.get("/api/persons", (request, response) => {
-  // console.log(persons);
   response.json(persons);
 });
 
@@ -64,7 +64,6 @@ const newId = () => {
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
-  // console.log("body.name=", body.name);
 
   const existingName = persons.find((person) => person.name === body.name);
 
@@ -84,8 +83,6 @@ app.post("/api/persons", (request, response) => {
     name: body.name,
     number: body.number,
   };
-
-  // console.log("person =", person);
 
   persons = persons.concat(person);
 
