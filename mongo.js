@@ -49,7 +49,7 @@ if (
   process.argv.length < 3
 ) {
   console.log(
-    "Please provide password, name, and number as an arg: node mongo.js <password> -NAME-  -NUMBER-"
+    "Please provide password, name, and number as an arg: node mongo.js <password> <NAME> <NUMBER>"
   );
   process.exit(1);
 }
