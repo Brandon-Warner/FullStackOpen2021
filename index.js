@@ -33,45 +33,26 @@ app.get("/api/persons", (request, response) => {
 });
 
 app.get("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  const person = persons.find((p) => p.id === id);
-  if (person) {
+  Person.findById(request.params.id).then((person) => {
     response.json(person);
-  } else {
-    response.status(404).end();
-  }
+  });
 });
-
-const newId = () => {
-  const id = Math.floor(Math.random() * 1000);
-  return id;
-};
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
-  const existingName = persons.find((person) => person.name === body.name);
-
-  if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: "not enough info to create contact",
-    });
-  }
-  if (existingName) {
-    return response.status(400).json({
-      error: "name already exists in phonebook",
-    });
+  if (body.name === undefined || body.number === undefined) {
+    return response.status(400).json({ error: "content missing" });
   }
 
-  const person = {
-    id: newId(),
+  const person = new Person({
     name: body.name,
     number: body.number,
-  };
+  });
 
-  persons = persons.concat(person);
-
-  response.json(persons);
+  person.save().then((savedPerson) => {
+    response.json(savedPerson);
+  });
 });
 
 app.delete("/api/persons/:id", (request, response) => {
