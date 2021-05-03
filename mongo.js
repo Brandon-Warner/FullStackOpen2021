@@ -4,7 +4,7 @@ const password = process.argv[2];
 const name = process.argv[3];
 const number = process.argv[4];
 
-const url = `mongodb+srv://brandonwarner5:${password}@cluster0.6zf6h.mongodb.net/persons?retryWrites=true&w=majority`;
+const url = process.env.MONGODB_URI;
 
 mongoose.connect(url, {
   useNewUrlParser: true,
