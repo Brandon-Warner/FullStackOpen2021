@@ -17,15 +17,6 @@ app.use(
   morgan(":method :url :status :response-time ms - :res[content-length] :body")
 );
 
-app.get("/info", (request, response) => {
-  const info = `Phonebook has ${persons.length} contacts`;
-  const date = new Date();
-
-  const allInfo = `<p> ${info} </p> <br> <p>${date}</p>`;
-
-  response.send(allInfo);
-});
-
 app.get("/api/persons", (request, response) => {
   Person.find({}).then((person) => {
     response.json(person);
@@ -47,18 +38,17 @@ app.get("/api/persons/:id", (request, response, next) => {
 app.post("/api/persons", (request, response, next) => {
   const body = request.body;
 
-  if (body.name === undefined || body.number === undefined) {
-    return response.status(400).json({ error: "content missing" });
-  }
-
   const person = new Person({
     name: body.name,
     number: body.number,
   });
 
-  person.save().then((savedPerson) => {
-    response.json(savedPerson);
-  });
+  person
+    .save()
+    .then((savedPerson) => {
+      response.json(savedPerson);
+    })
+    .catch((error) => next(error));
 });
 
 app.put("/api/persons/:id", (request, response, next) => {
@@ -89,6 +79,8 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({
       error: "malformatted id",
     });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).send({ error: error.message });
   }
   next(error);
 };
