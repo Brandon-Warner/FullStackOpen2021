@@ -17,6 +17,15 @@ app.use(
   morgan(":method :url :status :response-time ms - :res[content-length] :body")
 );
 
+app.get("/info", (request, response) => {
+  Person.find({}).then((persons) => {
+    const content = `Phonebook has ${persons.length} people
+    <br/><br/>
+    ${new Date()}`;
+    response.send(content);
+  });
+});
+
 app.get("/api/persons", (request, response) => {
   Person.find({}).then((person) => {
     response.json(person);
