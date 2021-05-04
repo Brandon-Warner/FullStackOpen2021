@@ -3,7 +3,7 @@ import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import Form from "./components/Form";
 import Message from "./components/Message";
-import noteService from "./services/phonebook.js";
+import personService from "./services/phonebook.js";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,7 +13,7 @@ const App = () => {
   const [newMessage, setNewMessage] = useState(null);
 
   useEffect(() => {
-    noteService.getAll().then((initialPersons) => {
+    personService.getAll().then((initialPersons) => {
       setPersons(initialPersons);
     });
   }, []);
@@ -35,7 +35,7 @@ const App = () => {
     const existsNumber = persons.some((person) => person.number === newNumber);
     const existsName = persons.some((person) => person.name === newName);
     if (!existsName) {
-      noteService.create(personObject).then((addedPerson) => {
+      personService.create(personObject).then((addedPerson) => {
         setPersons(persons.concat(addedPerson));
         setNewMessage(`${personObject.name} was added to phonebook`);
         setTimeout(() => {
@@ -53,7 +53,7 @@ const App = () => {
         const person = persons.find((person) => person.name === newName);
         const changedPerson = { ...person, number: newNumber };
 
-        noteService
+        personService
           .update(person.id, changedPerson)
           .then((updatedNumber) => {
             setPersons(
@@ -74,6 +74,18 @@ const App = () => {
       }
     } else if (existsName) {
       window.alert(`${newName} is already in the phonebook`);
+    } else if (newName.length < 3) {
+      setNewMessage(`${newName} does not meet the required length of name (3)`);
+      setTimeout(() => {
+        setNewMessage(null);
+      }, 5000);
+    } else if (newNumber.length < 10) {
+      setNewMessage(
+        `${newNumber} does not meet the required length of number (8)`
+      );
+      setTimeout(() => {
+        setNewMessage(null);
+      }, 5000);
     }
   };
   const handleNameChange = (event) => {
@@ -116,13 +128,15 @@ const App = () => {
     const person = persons.find((person) => person.id === id);
 
     if (window.confirm(`Delete ${person.name}?`)) {
-      noteService
+      personService
         .remove(id)
         .then((removedPerson) => console.log(removedPerson))
         .catch((error) => {
           console.log("error:", error);
         });
-      noteService.getAll().then((updatedPersons) => setPersons(updatedPersons));
+      personService
+        .getAll()
+        .then((updatedPersons) => setPersons(updatedPersons));
     }
   };
 
