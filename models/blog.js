@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-require('dotenv').config()
+const config = require('../utils/config')
 
-console.log('connecting to', process.env.MONGODB_URI)
+console.log('connecting to', config.MONGODB_URI)
 
 mongoose
-    .connect(process.env.MONGODB_URI, {
+    .connect(config.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
