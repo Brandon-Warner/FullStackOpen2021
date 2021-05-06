@@ -6,16 +6,23 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 
 const blogSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number,
+    title: { type: String, minlength: 3, required: true },
+    author: { type: String, minlength: 3, required: true },
+    url: { type: String, minlength: 3, required: true },
+    likes: { type: Number, minlength: 1, required: true },
+})
+
+blogSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
+    },
 })
 
 const Blog = mongoose.model('Blog', blogSchema)
 
 console.log('connecting to', process.env.MONGODB_URI)
-
 
 mongoose
     .connect(process.env.MONGODB_URI, {
@@ -43,9 +50,13 @@ app.get('/api/blogs', (request, response) => {
 app.post('/api/blogs', (request, response) => {
     const blog = new Blog(request.body)
 
-    blog.save().then((result) => {
-        response.status(201).json(result)
-    })
+    blog.save()
+        .then((result) => {
+            response.status(201).json(result)
+        })
+        .catch((error) => {
+            console.log(error.message)
+        })
 })
 
 const PORT = process.env.PORT
