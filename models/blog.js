@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const config = require('../utils/config')
+const logger = require('../utils/logger')
 
-console.log('connecting to', config.MONGODB_URI)
+logger.info('connecting to', config.MONGODB_URI)
 
 mongoose
     .connect(config.MONGODB_URI, {
@@ -11,10 +12,10 @@ mongoose
         useCreateIndex: true,
     })
     .then(() => {
-        console.log('connected to MongoDB')
+        logger.info('connected to MongoDB')
     })
     .catch((error) => {
-        console.log('error connecting to MongoDB', error.message)
+        logger.error('error connecting to MongoDB', error.message)
     })
 
 const blogSchema = new mongoose.Schema({
