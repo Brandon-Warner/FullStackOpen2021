@@ -1,7 +1,6 @@
 // contain all of the routes
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', (request, response) => {
     Blog.find({}).then((blogs) => {
@@ -29,7 +28,5 @@ blogsRouter.delete('/:id', (request, response, next) => {
         })
         .catch((error) => next(error))
 })
-
-// app.use(middleware.requestLogger)
 
 module.exports = blogsRouter
