@@ -11,7 +11,7 @@ const totalLikes = (blogList) =>
 const favoriteBlog = (blogList) => {
     blogList.sort((a, b) => {
         a.likes > b.likes ? -1 : 1
-        console.table(blogList)
+        // console.table(blogList)
     })
     return blogList[0]
 }
