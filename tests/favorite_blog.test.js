@@ -14,7 +14,7 @@ describe('favorite blog', () => {
         },
     ]
 
-    test('should be React Patters', () => {
+    test('should be React Patterns', () => {
         const result = listHelper.favoriteBlog(blogs)
         expect(result).toEqual({
             title: 'React patterns',
