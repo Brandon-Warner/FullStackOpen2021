@@ -86,7 +86,7 @@ test('blog has likes property', async () => {
         title: 'Practice blog',
         author: 'Donald Duck',
         url: 'www.blogs.com',
-        likes: '7',
+
         id: '369',
     }
 
