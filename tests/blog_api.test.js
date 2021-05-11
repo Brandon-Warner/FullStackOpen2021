@@ -81,6 +81,27 @@ test('successfully adding a blog', async () => {
     expect(titles).toContain('Practice blog')
 })
 
+test('blog has likes property', async () => {
+    const newBlog = {
+        title: 'Practice blog',
+        author: 'Donald Duck',
+        url: 'www.blogs.com',
+        likes: '7',
+        id: '369',
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+    const likes = response.body.map((r) => r.likes)
+
+    expect(likes).toBeDefined()
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
