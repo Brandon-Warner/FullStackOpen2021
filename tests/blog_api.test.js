@@ -102,6 +102,18 @@ test('blog has likes property', async () => {
     expect(likes).toBeDefined()
 })
 
+test('blog will be rejected if no title', async () => {
+    const newBlog = {
+        title: '',
+        author: 'Donald Duck',
+        url: 'www.blogs.com',
+        likes: '7',
+        id: '369',
+    }
+
+    await api.post('/api/blogs').send(newBlog).expect(400)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
