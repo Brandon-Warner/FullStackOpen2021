@@ -58,6 +58,29 @@ test('all blogs have an id', async () => {
     expect(ids).toBeDefined()
 })
 
+test('successfully adding a blog', async () => {
+    const newBlog = {
+        title: 'Practice blog',
+        author: 'Donald Duck',
+        url: 'www.blogs.com',
+        likes: '7',
+        id: '369',
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+
+    const titles = response.body.map((r) => r.title)
+
+    expect(response.body).toHaveLength(initialBlogs.length + 1)
+    expect(titles).toContain('Practice blog')
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
