@@ -14,8 +14,11 @@ const unknownEndpoint = (request, response) => {
 
 const errorHandler = (error, request, response, next) => {
     logger.error(error.message)
-    if (error.message === 'ValidationError') {
+    if (error.name === 'ValidationError') {
         response.status(400).send({ error: 'invalid request' })
+    }
+    if (error.name === 'CastError') {
+        response.status(400).send({ error: error.message })
     }
 
     next(error)

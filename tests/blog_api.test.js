@@ -104,7 +104,6 @@ test('blog has likes property', async () => {
 
 test('blog will be rejected if no title', async () => {
     const newBlog = {
-        title: '',
         author: 'Donald Duck',
         url: 'www.blogs.com',
         likes: '7',
@@ -112,6 +111,10 @@ test('blog will be rejected if no title', async () => {
     }
 
     await api.post('/api/blogs').send(newBlog).expect(400)
+
+    const response = await api.get('/api/blogs')
+
+    expect(response.body).toHaveLength(initialBlogs.length)
 })
 
 afterAll(() => {
