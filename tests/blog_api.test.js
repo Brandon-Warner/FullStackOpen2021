@@ -117,6 +117,22 @@ test('blog will be rejected if no title', async () => {
     expect(response.body).toHaveLength(initialBlogs.length)
 })
 
+test('blog will be rejected if no url', async () => {
+    const newBlog = {
+        title: 'Practice blog',
+        author: 'Donald Duck',
+
+        likes: '7',
+        id: '369',
+    }
+
+    await api.post('/api/blogs').send(newBlog).expect(400)
+
+    const response = await api.get('/api/blogs')
+
+    expect(response.body).toHaveLength(initialBlogs.length)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
