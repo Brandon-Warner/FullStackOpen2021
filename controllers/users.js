@@ -19,6 +19,10 @@ usersRouter.post('/', async (request, response) => {
     response.json(savedUser)
 })
 
-// usersRouter.get('/api/user')
+usersRouter.get('/', async (request, response) => {
+    const users = await User.find({})
+
+    response.json(users)
+})
 
 module.exports = usersRouter
