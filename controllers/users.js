@@ -19,6 +19,6 @@ usersRouter.post('/', async (request, response) => {
     response.json(savedUser)
 })
 
-usersRouter.get('/api/user')
+// usersRouter.get('/api/user')
 
 module.exports = usersRouter
