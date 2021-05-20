@@ -2,7 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 { 
+    "title": "Soda Lovers",
     "author": "Koka Colah", 
     "url": "www.pepsiisthedevil.com", 
-    "likes": "3"
+    "likes": "3",
+    "userId": "60a6bdd6d41aa401971991a6"
 }
