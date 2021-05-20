@@ -106,6 +106,14 @@ test('blog will be rejected if no url', async () => {
     expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
+describe('when there is one user existing in DB', () => {
+    beforeEach(async () => {
+        await User.deleteMany({})
+
+
+    })
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
