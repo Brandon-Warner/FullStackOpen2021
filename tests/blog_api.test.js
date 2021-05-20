@@ -3,7 +3,7 @@ const supertest = require('supertest')
 const app = require('../app')
 const helper = require('./test_helper')
 const api = supertest(app)
-
+const bcrypt = require('bcrypt')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
@@ -110,7 +110,32 @@ describe('when there is one user existing in DB', () => {
     beforeEach(async () => {
         await User.deleteMany({})
 
+        const passwordHash = await bcrypt.hash('pickle22', 10)
+        const user = new User({
+            username: 'gregtheleg',
+            passwordHash,
+        })
+        await user.save()
+    })
+    test('duplicate username will be rejected', async () => {
+        const usersAtStart = await helper.usersInDb()
 
+        const newUser = {
+            username: 'gregtheleg',
+            name: 'Gregory',
+            password: 'abc123',
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body.error).toContain('invalid')
+
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length)
     })
 })
 
