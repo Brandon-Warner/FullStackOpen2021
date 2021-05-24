@@ -1,10 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdyZWd0aGVsZWciLCJpZCI6IjYwYWMwOTAyNGI1YjhhNTg1NmViN2E4NyIsImlhdCI6MTYyMTg5NDExMn0.DNLcUXk2m29jy9chFbIY7MahXKjRcPUftnOVeL1HR1s
 
 { 
     "title": "Soda Lovers",
     "author": "Koka Colah", 
     "url": "www.pepsiisthedevil.com", 
     "likes": "3",
-    "userId": "60abe68ae5019e1a86b613f2"
+    "userId": ""
 }
