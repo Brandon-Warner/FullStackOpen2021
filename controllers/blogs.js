@@ -13,6 +13,7 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.post(
     '/',
     middleware.tokenVerification,
+    middleware.userVerification,
     async (request, response) => {
         console.log('request token: ', request.token)
         const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -22,8 +23,7 @@ blogsRouter.post(
                 .json({ error: 'token missing or invalid' })
         }
         const body = request.body
-        const user = await User.findById(decodedToken.id)
-
+        const user = await User.findById(request.user.id)
         const blog = new Blog({
             title: body.title,
             author: body.author,

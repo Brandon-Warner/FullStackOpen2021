@@ -1,4 +1,6 @@
+const jwt = require('jsonwebtoken')
 const logger = require('./logger')
+
 
 const requestLogger = (request, response, next) => {
     logger.info('Method: ', request.method)
@@ -11,6 +13,27 @@ const requestLogger = (request, response, next) => {
 const unknownEndpoint = (request, response, next) => {
     response.status(404).send({ error: 'unknown endpoint' })
     next()
+}
+
+const userVerification = (request, response, next) => {
+    const authHeader = request.get('authorization')
+    if (authHeader !== 'undefined') {
+        const authToken = authHeader.split(' ')
+        const token = authToken[1]
+        console.log('token: ', token)
+        jwt.verify(token, process.env.SECRET, (error, authData) => {
+            console.log('authData: ', authData)
+            if (error) {
+                response.sendStatus(403)
+            } else {
+                request.user = authData
+
+                next()
+            }
+        })
+    } else {
+        response.sendStatus(403)
+    }
 }
 
 const tokenVerification = (request, response, next) => {
@@ -46,4 +69,5 @@ module.exports = {
     unknownEndpoint,
     errorHandler,
     tokenVerification,
+    userVerification,
 }
