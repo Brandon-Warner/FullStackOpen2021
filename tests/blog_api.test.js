@@ -4,6 +4,7 @@ const app = require('../app')
 const helper = require('./test_helper')
 const api = supertest(app)
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
@@ -32,16 +33,28 @@ test('all blogs have an id', async () => {
 })
 
 test('successfully adding a blog', async () => {
+    const user = await User.findOne({})
+
+    const userForToken = {
+        username: user.username,
+        id: user._id,
+    }
+
+    const token = jwt.sign(userForToken, process.env.SECRET)
+
+    console.log('user: ', user)
     const newBlog = {
         title: 'Practice blog',
         author: 'Donald Duck',
         url: 'www.blogs.com',
         likes: '7',
         id: '369',
+        user: user._id.toString(),
     }
-
+    console.log('blog object: ', newBlog)
     await api
         .post('/api/blogs')
+        .set('Authorization', `bearer ${token}`)
         .send(newBlog)
         .expect(200)
         .expect('Content-Type', /application\/json/)

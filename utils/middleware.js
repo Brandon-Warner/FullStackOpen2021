@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const logger = require('./logger')
 
-
 const requestLogger = (request, response, next) => {
     logger.info('Method: ', request.method)
     logger.info('Path: ', request.path)
@@ -20,11 +19,12 @@ const userVerification = (request, response, next) => {
     if (authHeader !== 'undefined') {
         const authToken = authHeader.split(' ')
         const token = authToken[1]
-        // console.log('token: ', token)
+        console.log('token in userVerification: ', token)
         jwt.verify(token, process.env.SECRET, (error, authData) => {
-            // console.log('authData: ', authData)
+            console.log('authData: ', authData)
             if (error) {
-                response.sendStatus(403)
+                console.log(error.message)
+                response.sendStatus(401)
             } else {
                 request.user = authData
 
@@ -32,7 +32,7 @@ const userVerification = (request, response, next) => {
             }
         })
     } else {
-        response.sendStatus(403)
+        response.sendStatus(401)
     }
 }
 
@@ -43,11 +43,11 @@ const tokenVerification = (request, response, next) => {
     if (authHeader !== 'undefined') {
         const authToken = authHeader.split(' ')
         const token = authToken[1]
-        // console.log('token: ', token)
+        console.log('token: ', token)
         request.token = token
         next()
     } else {
-        response.sendStatus(403)
+        response.sendStatus(401)
     }
 }
 
