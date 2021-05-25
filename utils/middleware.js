@@ -14,7 +14,9 @@ const unknownEndpoint = (request, response, next) => {
 }
 
 const tokenVerification = (request, response, next) => {
+    console.log('request headers: ', request.headers)
     const authHeader = request.get('authorization')
+    console.log('authHeader: ', authHeader)
     if (authHeader !== 'undefined') {
         const authToken = authHeader.split(' ')
         const token = authToken[1]
