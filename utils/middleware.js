@@ -8,8 +8,22 @@ const requestLogger = (request, response, next) => {
     next()
 }
 
-const unknownEndpoint = (request, response) => {
+const unknownEndpoint = (request, response, next) => {
     response.status(404).send({ error: 'unknown endpoint' })
+    next()
+}
+
+const tokenVerification = (request, response, next) => {
+    const authHeader = request.get('authorization')
+    if (authHeader !== 'undefined') {
+        const authToken = authHeader.split(' ')
+        const token = authToken[1]
+        console.log('token: ', token)
+        request.token = token
+        next()
+    } else {
+        response.sendStatus(403)
+    }
 }
 
 const errorHandler = (error, request, response, next) => {
@@ -29,4 +43,5 @@ module.exports = {
     requestLogger,
     unknownEndpoint,
     errorHandler,
+    tokenVerification,
 }
