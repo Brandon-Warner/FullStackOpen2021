@@ -20,9 +20,9 @@ const userVerification = (request, response, next) => {
     if (authHeader !== 'undefined') {
         const authToken = authHeader.split(' ')
         const token = authToken[1]
-        console.log('token: ', token)
+        // console.log('token: ', token)
         jwt.verify(token, process.env.SECRET, (error, authData) => {
-            console.log('authData: ', authData)
+            // console.log('authData: ', authData)
             if (error) {
                 response.sendStatus(403)
             } else {
@@ -37,13 +37,13 @@ const userVerification = (request, response, next) => {
 }
 
 const tokenVerification = (request, response, next) => {
-    console.log('request headers: ', request.headers)
+    // console.log('request headers: ', request.headers)
     const authHeader = request.get('authorization')
-    console.log('authHeader: ', authHeader)
+    // console.log('authHeader: ', authHeader)
     if (authHeader !== 'undefined') {
         const authToken = authHeader.split(' ')
         const token = authToken[1]
-        console.log('token: ', token)
+        // console.log('token: ', token)
         request.token = token
         next()
     } else {
