@@ -32,91 +32,143 @@ test('all blogs have an id', async () => {
     expect(ids).toBeDefined()
 })
 
-test('successfully adding a blog', async () => {
-    const user = await User.findOne({})
+describe('posting a new blog', () => {
+    test('successfully adding a blog', async () => {
+        const user = await User.findOne({})
 
-    const userForToken = {
-        username: user.username,
-        id: user._id,
-    }
+        const userForToken = {
+            username: user.username,
+            id: user._id,
+        }
 
-    const token = jwt.sign(userForToken, process.env.SECRET)
+        const token = jwt.sign(userForToken, process.env.SECRET)
 
-    console.log('user: ', user)
-    const newBlog = {
-        title: 'Practice blog',
-        author: 'Donald Duck',
-        url: 'www.blogs.com',
-        likes: '7',
-        id: '369',
-        user: user._id.toString(),
-    }
-    console.log('blog object: ', newBlog)
-    await api
-        .post('/api/blogs')
-        .set('Authorization', `bearer ${token}`)
-        .send(newBlog)
-        .expect(200)
-        .expect('Content-Type', /application\/json/)
+        console.log('user: ', user)
+        const newBlog = {
+            title: 'Practice blog',
+            author: 'Donald Duck',
+            url: 'www.blogs.com',
+            likes: '7',
+            id: '369',
+            user: user._id.toString(),
+        }
+        console.log('blog object: ', newBlog)
+        await api
+            .post('/api/blogs')
+            .set('Authorization', `bearer ${token}`)
+            .send(newBlog)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
 
-    const response = await api.get('/api/blogs')
+        const response = await api.get('/api/blogs')
 
-    const titles = response.body.map((r) => r.title)
+        const titles = response.body.map((r) => r.title)
 
-    expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
-    expect(titles).toContain('Practice blog')
-})
+        expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
+        expect(titles).toContain('Practice blog')
+    })
 
-test('blog has likes property', async () => {
-    const newBlog = {
-        title: 'Practice blog',
-        author: 'Donald Duck',
-        url: 'www.blogs.com',
+    test('blog has likes property', async () => {
+        const user = await User.findOne({})
 
-        id: '369',
-    }
+        const userForToken = {
+            username: user.username,
+            id: user._id,
+        }
 
-    await api
-        .post('/api/blogs')
-        .send(newBlog)
-        .expect(200)
-        .expect('Content-Type', /application\/json/)
+        const token = jwt.sign(userForToken, process.env.SECRET)
 
-    const response = await api.get('/api/blogs')
-    const likes = response.body.map((r) => r.likes)
+        const newBlog = {
+            title: 'Practice blog',
+            author: 'Donald Duck',
+            url: 'www.blogs.com',
 
-    expect(likes).toBeDefined()
-})
+            id: '369',
+            user: user._id.toString(),
+        }
 
-test('blog will be rejected if no title', async () => {
-    const newBlog = {
-        author: 'Donald Duck',
-        url: 'www.blogs.com',
-        likes: '7',
-        id: '369',
-    }
+        await api
+            .post('/api/blogs')
+            .set('Authorization', `bearer ${token}`)
+            .send(newBlog)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
 
-    await api.post('/api/blogs').send(newBlog).expect(400)
+        const response = await api.get('/api/blogs')
+        const likes = response.body.map((r) => r.likes)
 
-    const response = await api.get('/api/blogs')
+        expect(likes).toBeDefined()
+    })
 
-    expect(response.body).toHaveLength(helper.initialBlogs.length)
-})
+    test('blog will be rejected if no title', async () => {
+        const user = await User.findOne({})
 
-test('blog will be rejected if no url', async () => {
-    const newBlog = {
-        title: 'Practice blog',
-        author: 'Donald Duck',
+        const userForToken = {
+            username: user.username,
+            id: user._id,
+        }
 
-        likes: '7',
-        id: '369',
-    }
+        const token = jwt.sign(userForToken, process.env.SECRET)
 
-    await api.post('/api/blogs').send(newBlog).expect(400)
+        const newBlog = {
+            author: 'Donald Duck',
+            url: 'www.blogs.com',
+            likes: '7',
+            id: '369',
+            user: user._id.toString(),
+        }
 
-    const response = await api.get('/api/blogs')
+        await api
+            .post('/api/blogs')
+            .set('Authorization', `bearer ${token}`)
+            .send(newBlog)
+            .expect(400)
 
-    expect(response.body).toHaveLength(helper.initialBlogs.length)
+        const response = await api.get('/api/blogs')
+
+        expect(response.body).toHaveLength(helper.initialBlogs.length)
+    })
+
+    test('blog will be rejected if no url', async () => {
+        const newBlog = {
+            title: 'Practice blog',
+            author: 'Donald Duck',
+
+            likes: '7',
+            id: '369',
+        }
+
+        await api.post('/api/blogs').send(newBlog).expect(400)
+
+        const response = await api.get('/api/blogs')
+
+        expect(response.body).toHaveLength(helper.initialBlogs.length)
+    })
+
+    test('blog without token is rejected', async () => {
+        const user = await User.findOne({})
+
+        console.log('user: ', user)
+        const newBlog = {
+            title: 'Practice blog',
+            author: 'Donald Duck',
+            url: 'www.blogs.com',
+            likes: '7',
+            id: '369',
+            user: user._id.toString(),
+        }
+        console.log('blog object: ', newBlog)
+        await api
+            .post('/api/blogs')
+            .set('Authorization', 'bearer abc123')
+            .send(newBlog)
+            .expect(401)
+            .expect('Content-Type', /text\/plain/)
+
+        const response = await api.get('/api/blogs')
+
+        expect(response.body).toHaveLength(helper.initialBlogs.length)
+    })
 })
 
 describe('when there is one user existing in DB', () => {
