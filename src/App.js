@@ -8,6 +8,9 @@ const App = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [url, setUrl] = useState('')
 
     useEffect(() => {
         blogService.getAll().then(blogs => setBlogs(blogs))
@@ -74,9 +77,42 @@ const App = () => {
     }
     return (
         <div>
-            <p>{user.name} is logged in</p>
-            <button onClick={handleLogout}>Logout</button>
             <h2>blogs</h2>
+            <div>
+                <p>{user.name} is logged in</p>
+                <button onClick={handleLogout}>Logout</button>
+            </div>
+            <div>
+                <h2>New Post</h2>
+                <form>
+                    Title:
+                    <input
+                        type='text'
+                        value={title}
+                        name='title'
+                        onChange={target => setTitle(target.value)}
+                    />
+                    <br></br>
+                    Author:
+                    <input
+                        type='text'
+                        value={author}
+                        name='author'
+                        onChange={target => setAuthor(target.value)}
+                    />
+                    <br></br>
+                    Url:
+                    <input
+                        type='text'
+                        value={url}
+                        name='url'
+                        onChange={target => setUrl(target.value)}
+                    />
+                    <br></br>
+                    <button>Submit Blog</button>
+                </form>
+            </div>
+            <h2>{user.name}'s Blogs: </h2>
             {blogs.map(blog => {
                 if (blog.user.username === user.username) {
                     return <Blog key={blog.id} blog={blog} />
