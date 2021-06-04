@@ -41,6 +41,10 @@ const App = () => {
             setPassword('')
         } catch (exception) {}
     }
+    const handleLogout = () => {
+        window.localStorage.removeItem('loggedBlogappUser')
+        setUser(null)
+    }
     if (user === null) {
         return (
             <div>
@@ -68,10 +72,10 @@ const App = () => {
             </div>
         )
     }
-
     return (
         <div>
             <p>{user.name} is logged in</p>
+            <button onClick={handleLogout}>Logout</button>
             <h2>blogs</h2>
             {blogs.map(blog => {
                 if (blog.user.username === user.username) {
