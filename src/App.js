@@ -21,6 +21,12 @@ const App = () => {
                 username,
                 password,
             })
+
+            window.localStorage.setItem(
+                'loggedBlogappUser',
+                JSON.stringify(user)
+            )
+            blogService.setToken(user.token)
             setUser(user)
             setUsername('')
             setPassword('')
@@ -29,7 +35,7 @@ const App = () => {
     if (user === null) {
         return (
             <div>
-                <h2>login</h2>
+                <h2>Please Log In</h2>
                 <form onSubmit={handleLogin}>
                     <div>
                         username
@@ -56,10 +62,15 @@ const App = () => {
 
     return (
         <div>
+            <p>{user.name} is logged in</p>
             <h2>blogs</h2>
-            {blogs.map(blog => (
-                <Blog key={blog.id} blog={blog} />
-            ))}
+            {blogs.map(blog => {
+                if (blog.user.username === user.username) {
+                    return <Blog key={blog.id} blog={blog} />
+                } else {
+                    return null
+                }
+            })}
         </div>
     )
 }
