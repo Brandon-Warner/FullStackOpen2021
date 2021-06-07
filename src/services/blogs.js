@@ -20,5 +20,15 @@ const create = async newObject => {
     return response.data
 }
 
+const postBlog = async blogObject => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    console.log('blogObject: ', blogObject)
+    const response = await axios.post(baseUrl, blogObject, config)
+    console.log('response data: ', response.data)
+    return response.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, create, setToken }
+export default { getAll, create, setToken, postBlog }

@@ -42,12 +42,31 @@ const App = () => {
             setUser(user)
             setUsername('')
             setPassword('')
-        } catch (exception) {}
+        } catch (exception) {
+            console.log('error', exception)
+        }
     }
     const handleLogout = () => {
         window.localStorage.removeItem('loggedBlogappUser')
         setUser(null)
     }
+    const handleSubmit = async event => {
+        event.preventDefault()
+        try {
+            const blogObject = {
+                title,
+                author,
+                url,
+            }
+            blogService.postBlog(blogObject)
+            setTitle('')
+            setAuthor('')
+            setUrl('')
+        } catch (exception) {
+            console.log('error', exception)
+        }
+    }
+
     if (user === null) {
         return (
             <div>
@@ -90,7 +109,10 @@ const App = () => {
                         type='text'
                         value={title}
                         name='title'
-                        onChange={target => setTitle(target.value)}
+                        onChange={({ target }) => {
+                            console.log('title:', target.value)
+                            setTitle(target.value)
+                        }}
                     />
                     <br></br>
                     Author:
@@ -98,7 +120,10 @@ const App = () => {
                         type='text'
                         value={author}
                         name='author'
-                        onChange={target => setAuthor(target.value)}
+                        onChange={({ target }) => {
+                            console.log('author:', target.value)
+                            setAuthor(target.value)
+                        }}
                     />
                     <br></br>
                     Url:
@@ -106,10 +131,13 @@ const App = () => {
                         type='text'
                         value={url}
                         name='url'
-                        onChange={target => setUrl(target.value)}
+                        onChange={({ target }) => {
+                            console.log('url:', target.value)
+                            setUrl(target.value)
+                        }}
                     />
                     <br></br>
-                    <button>Submit Blog</button>
+                    <button onClick={handleSubmit}>Submit Blog</button>
                 </form>
             </div>
             <h2>{user.name}'s Blogs: </h2>
