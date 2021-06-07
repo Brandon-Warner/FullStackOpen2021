@@ -3,6 +3,10 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+const Notification = ({ message }) => {
+    return <h3>{message}</h3>
+}
+
 const App = () => {
     const [blogs, setBlogs] = useState([])
     const [username, setUsername] = useState('')
@@ -11,6 +15,7 @@ const App = () => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
+    const [message, setMessage] = useState(null)
 
     useEffect(() => {
         blogService.getAll().then(blogs => setBlogs(blogs))
@@ -27,7 +32,7 @@ const App = () => {
 
     const handleLogin = async event => {
         event.preventDefault()
-        console.log('logging in with', username, password)
+        // console.log('logging in with', username, password)
         try {
             const user = await loginService.login({
                 username,
@@ -44,8 +49,13 @@ const App = () => {
             setPassword('')
         } catch (exception) {
             console.log('error', exception)
+            setMessage('Wrong username or password')
+            setTimeout(() => {
+                setMessage(null)
+            }, 5000)
         }
     }
+
     const handleLogout = () => {
         window.localStorage.removeItem('loggedBlogappUser')
         setUser(null)
@@ -71,6 +81,7 @@ const App = () => {
         return (
             <div>
                 <h2>Please Log In</h2>
+                <Notification message={message} />
                 <form onSubmit={handleLogin}>
                     <div>
                         username
