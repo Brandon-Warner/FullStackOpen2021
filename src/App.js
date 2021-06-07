@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
-
-const Notification = ({ message }) => {
-    return <h3>{message}</h3>
-}
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -32,7 +29,6 @@ const App = () => {
 
     const handleLogin = async event => {
         event.preventDefault()
-        // console.log('logging in with', username, password)
         try {
             const user = await loginService.login({
                 username,
@@ -69,6 +65,10 @@ const App = () => {
                 url,
             }
             blogService.postBlog(blogObject)
+            setMessage(`${user.name} added blog ${title}`)
+            setTimeout(() => {
+                setMessage(null)
+            }, 5000)
             setTitle('')
             setAuthor('')
             setUrl('')
@@ -108,6 +108,7 @@ const App = () => {
     return (
         <div>
             <h2>blogs</h2>
+            <Notification message={message} />
             <div>
                 <p>{user.name} is logged in</p>
                 <button onClick={handleLogout}>Logout</button>
