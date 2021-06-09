@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
+import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -113,45 +115,17 @@ const App = () => {
                 <p>{user.name} is logged in</p>
                 <button onClick={handleLogout}>Logout</button>
             </div>
-            <div>
-                <h2>New Post</h2>
-                <form>
-                    Title:
-                    <input
-                        type='text'
-                        value={title}
-                        name='title'
-                        onChange={({ target }) => {
-                            console.log('title:', target.value)
-                            setTitle(target.value)
-                        }}
-                    />
-                    <br></br>
-                    Author:
-                    <input
-                        type='text'
-                        value={author}
-                        name='author'
-                        onChange={({ target }) => {
-                            console.log('author:', target.value)
-                            setAuthor(target.value)
-                        }}
-                    />
-                    <br></br>
-                    Url:
-                    <input
-                        type='text'
-                        value={url}
-                        name='url'
-                        onChange={({ target }) => {
-                            console.log('url:', target.value)
-                            setUrl(target.value)
-                        }}
-                    />
-                    <br></br>
-                    <button onClick={handleSubmit}>Submit Blog</button>
-                </form>
-            </div>
+            <Toggleable buttonLabel='new blog'>
+                <BlogForm
+                    handleSubmit={handleSubmit}
+                    title={title}
+                    author={author}
+                    url={url}
+                    setTitle={setTitle}
+                    setAuthor={setAuthor}
+                    setUrl={setUrl}
+                />
+            </Toggleable>
             <h2>{user.name}'s Blogs: </h2>
             {blogs.map(blog => {
                 if (blog.user.username === user.username) {
