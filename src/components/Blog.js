@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import blogService from '../services/blogs'
 const Blog = ({ blog }) => {
-    // console.log('blog:', blog)
     const [visible, setVisible] = useState(false)
 
     const blogStyle = {
@@ -25,7 +25,14 @@ const Blog = ({ blog }) => {
             <button onClick={() => setVisible(false)}>hide</button>
             <br></br>
             {blog.url} <br></br>
-            likes: {blog.likes} <button>like</button>
+            likes: {blog.likes}{' '}
+            <button
+                onClick={() => {
+                    blogService.addLike(blog.id)
+                }}
+            >
+                like
+            </button>
             <br></br>
             {blog.user.name}
         </div>

@@ -30,5 +30,23 @@ const postBlog = async blogObject => {
     return response.data
 }
 
+const addLike = async blogId => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const blogs = await getAll()
+    const blog = blogs.find(b => b.id === blogId)
+    const updated = { ...blog, likes: blog.likes + 1 }
+    console.log('updated:', updated)
+
+    const response = await axios.put(
+        `${baseUrl}/${updated.id}`,
+        updated,
+        config
+    )
+    console.log('response data: ', response.data)
+    return response.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, create, setToken, postBlog }
+export default { getAll, create, setToken, postBlog, addLike }
