@@ -35,6 +35,20 @@ const Blog = ({ blog }) => {
             </button>
             <br></br>
             {blog.user.name}
+            <br></br>
+            <button
+                onClick={() => {
+                    if (
+                        window.confirm(
+                            `Are you sure you want to delete ${blog.title}?`
+                        )
+                    ) {
+                        blogService.removeBlog(blog.id)
+                    }
+                }}
+            >
+                remove
+            </button>
         </div>
     )
 }
