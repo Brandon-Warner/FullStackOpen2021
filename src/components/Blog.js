@@ -3,19 +3,24 @@ const Blog = ({ blog }) => {
     // console.log('blog:', blog)
     const [visible, setVisible] = useState(false)
 
-    const hideWhenVisible = { display: visible ? 'none' : '' }
-    const showWhenVisible = { display: visible ? '' : 'none' }
+    const blogStyle = {
+        paddingTop: 10,
+        paddingLeft: 2,
+        border: 'solid 2px',
+        borderWidth: 1,
+        marginBottom: 5,
+    }
 
     if (visible === false) {
         return (
-            <div style={hideWhenVisible}>
+            <div style={blogStyle}>
                 {blog.title} {blog.author}
                 <button onClick={() => setVisible(true)}>view</button>
             </div>
         )
     }
     return (
-        <div style={showWhenVisible}>
+        <div style={blogStyle}>
             {blog.title} {blog.author}{' '}
             <button onClick={() => setVisible(false)}>hide</button>
             <br></br>
