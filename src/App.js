@@ -10,10 +10,9 @@ const App = () => {
     const [blogs, setBlogs] = useState([])
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
     const [user, setUser] = useState(null)
-    const [title, setTitle] = useState('')
-    const [author, setAuthor] = useState('')
-    const [url, setUrl] = useState('')
+
     const [message, setMessage] = useState(null)
 
     useEffect(() => {
@@ -58,25 +57,11 @@ const App = () => {
         window.localStorage.removeItem('loggedBlogappUser')
         setUser(null)
     }
-    const handleSubmit = async event => {
-        event.preventDefault()
-        try {
-            const blogObject = {
-                title,
-                author,
-                url,
-            }
-            blogService.postBlog(blogObject)
-            setMessage(`${user.name} added blog ${title}`)
-            setTimeout(() => {
-                setMessage(null)
-            }, 5000)
-            setTitle('')
-            setAuthor('')
-            setUrl('')
-        } catch (exception) {
-            console.log('error', exception)
-        }
+
+    const addBlog = blogObject => {
+        blogService.create(blogObject).then(returnedBlog => {
+            setBlogs(blogs.concat(returnedBlog))
+        })
     }
 
     if (user === null) {
@@ -116,15 +101,7 @@ const App = () => {
                 <button onClick={handleLogout}>Logout</button>
             </div>
             <Toggleable buttonLabel='new blog'>
-                <BlogForm
-                    handleSubmit={handleSubmit}
-                    title={title}
-                    author={author}
-                    url={url}
-                    setTitle={setTitle}
-                    setAuthor={setAuthor}
-                    setUrl={setUrl}
-                />
+                <BlogForm createBlog={addBlog} />
             </Toggleable>
             <h2>{user.name}'s Blogs: </h2>
             {blogs.map(blog => {
