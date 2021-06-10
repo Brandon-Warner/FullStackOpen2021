@@ -105,7 +105,7 @@ const App = () => {
             <Toggleable buttonLabel='new blog'>
                 <BlogForm createBlog={addBlog} />
             </Toggleable>
-            <h2>{user.name}'s Blogs: </h2>
+            <h2>{user.name}&apos;s Blogs: </h2>
             {blogs.map(blog => {
                 if (blog.user.username === user.username) {
                     return <Blog key={blog.id} blog={blog} />
