@@ -13,14 +13,14 @@ const Blog = ({ blog }) => {
 
     if (visible === false) {
         return (
-            <div style={blogStyle}>
+            <div style={blogStyle} className='blog'>
                 {blog.title} {blog.author}
                 <button onClick={() => setVisible(true)}>view</button>
             </div>
         )
     }
     return (
-        <div style={blogStyle}>
+        <div style={blogStyle} className='blog'>
             {blog.title} {blog.author}{' '}
             <button onClick={() => setVisible(false)}>hide</button>
             <br></br>
