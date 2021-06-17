@@ -10,8 +10,7 @@ test('renders title and author', () => {
     }
     const component = render(<Blog blog={blog} />)
 
-    expect(component.container).toHaveTextContent('blah blah blah')
-    expect(component.container).toHaveTextContent('Dr Seuss')
+    expect(component.container).toHaveTextContent('blah blah blah Dr Seuss')
 })
 
 test('clicking button shows like and url', () => {
@@ -25,13 +24,10 @@ test('clicking button shows like and url', () => {
         },
     }
 
-    const mockHandler = jest.fn()
-
-    const component = render(<Blog blog={blog} setVisible={mockHandler} />)
+    const component = render(<Blog blog={blog} />)
     const button = component.getByText('view')
-
     fireEvent.click(button)
-
-    expect(component.container).toHaveTextContent('www.blahblah.com')
-    expect(component.container).toHaveTextContent('5')
+    expect(component.container).toHaveTextContent(
+        'blah blah bluh Dr Strange hidewww.blahblah.com likes: 5 likeDaveremove'
+    )
 })
