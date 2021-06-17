@@ -11,15 +11,13 @@ const App = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
-
+    const [update, setUpdate] = useState(null)
     const [message, setMessage] = useState(null)
 
     useEffect(() => {
-        blogService.getAll().then(blogs => {
-            blogs.sort((a, b) => (a.likes > b.likes ? -1 : 1))
-            setBlogs(blogs)
-        }, [])
-    })
+        blogService.getAll().then(blogs => setBlogs(blogs))
+    }, [update])
+
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
         if (loggedUserJSON) {
@@ -105,13 +103,15 @@ const App = () => {
                 <BlogForm createBlog={addBlog} />
             </Toggleable>
             <h2>{user.name}&apos;s Blogs: </h2>
-            {blogs.map(blog => {
-                if (blog.user.username === user.username) {
-                    return <Blog key={blog.id} blog={blog} />
-                } else {
-                    return null
-                }
-            })}
+            {blogs
+                .sort((a, b) => b.likes - a.likes)
+                .map(blog => {
+                    if (blog.user.username === user.username) {
+                        return <Blog key={blog.id} blog={blog} setUpdate={setUpdate} />
+                    } else {
+                        return null
+                    }
+                })}
         </div>
     )
 }

@@ -1,11 +1,8 @@
+/* eslint-disable indent */
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
-const Blog = ({ blog }) => {
+const Blog = ({ blog, setUpdate }) => {
     const [visible, setVisible] = useState(false)
-
-    const toggleVisibility = () => {
-        setVisible(!visible)
-    }
 
     const blogStyle = {
         paddingTop: 10,
@@ -15,11 +12,19 @@ const Blog = ({ blog }) => {
         marginBottom: 5,
     }
 
+    const like = async event => {
+        event.preventDefault()
+        const likes = blog.likes + 1
+        const newBlog = { ...blog, likes }
+        await blogService.update(blog.id, newBlog)
+        setUpdate(Math.floor(Math.random() * 100))
+    }
+
     if (!visible) {
         return (
             <div style={blogStyle} className='blog'>
                 {blog.title} {blog.author}
-                <button onClick={toggleVisibility} className='view'>
+                <button onClick={() => setVisible(true)} className='view'>
                     view
                 </button>
             </div>
@@ -28,14 +33,11 @@ const Blog = ({ blog }) => {
     return (
         <div style={blogStyle} className='blog'>
             {blog.title} {blog.author}{' '}
-            <button onClick={toggleVisibility}>hide</button>
+            <button onClick={() => setVisible(false)}>hide</button>
             <br></br>
             {blog.url} <br></br>
             likes: {blog.likes}{' '}
-            <button
-                onClick={() => blogService.addLike(blog.id)}
-                className='like'
-            >
+            <button onClick={like} className='like'>
                 like
             </button>
             <br></br>
