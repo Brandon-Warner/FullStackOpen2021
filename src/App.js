@@ -80,7 +80,7 @@ const App = () => {
                         <br></br>
                         password
                         <input
-                            type='text'
+                            type='password'
                             value={password}
                             name='Password'
                             onChange={({ target }) => setPassword(target.value)}
@@ -107,7 +107,13 @@ const App = () => {
                 .sort((a, b) => b.likes - a.likes)
                 .map(blog => {
                     if (blog.user.username === user.username) {
-                        return <Blog key={blog.id} blog={blog} setUpdate={setUpdate} />
+                        return (
+                            <Blog
+                                key={blog.id}
+                                blog={blog}
+                                setUpdate={setUpdate}
+                            />
+                        )
                     } else {
                         return null
                     }
