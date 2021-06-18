@@ -31,23 +31,3 @@ test('clicking button shows like and url', () => {
         'blah blah bluh Dr Strange hidewww.blahblah.com likes: 5 likeDaveremove'
     )
 })
-//  NEED TO COME BACK AND FIGURE THIS OUT
-// test('clicking like button twice records 2 function calls', async () => {
-//     const blog = {
-//         title: 'blah blah bluh',
-//         author: 'Dr Strange',
-//         likes: 5,
-//         url: 'www.blahblah.com',
-//         user: {
-//             name: 'Dave',
-//         },
-//     }
-//     const mockHandler = jest.fn()
-//     const component = render(<Blog blog={blog} like={mockHandler} />)
-//     const button = component.getByText('view')
-//     fireEvent.click(button)
-//     const button1 = component.getByText('like')
-//     fireEvent.click(button1)
-//     fireEvent.click(button1)
-//     expect(mockHandler.mock.calls).toHaveLength(2)
-// })
