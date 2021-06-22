@@ -14,4 +14,14 @@ describe('Blog app', function () {
         cy.contains('Please Log In')
         cy.contains('login')
     })
+    describe('Login', function () {
+        it('succeeds with valid credentials', function () {
+            cy.contains('login').click()
+            cy.get('.username').type('timmy')
+            cy.get('.password').type('turner')
+            cy.get('.login-button').click()
+
+            cy.contains('Timmy Turner is logged in')
+        })
+    })
 })
