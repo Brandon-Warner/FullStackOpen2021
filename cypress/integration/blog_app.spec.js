@@ -38,5 +38,20 @@ describe('Blog app', function () {
 
             cy.contains('blogTitle')
         })
+        describe('When a blog already exists', function () {
+            beforeEach(function () {
+                cy.createBlog({
+                    title: 'title1',
+                    author: 'author1',
+                    url: 'url1',
+                })
+            })
+            it.only('a blog can be liked', function () {
+                cy.contains('title1').contains('view').click()
+                cy.contains('title1').contains('like').click()
+
+                cy.contains('likes').contains('1')
+            })
+        })
     })
 })
