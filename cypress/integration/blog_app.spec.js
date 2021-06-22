@@ -46,11 +46,18 @@ describe('Blog app', function () {
                     url: 'url1',
                 })
             })
-            it.only('a blog can be liked', function () {
+            it('a blog can be liked', function () {
                 cy.contains('title1').contains('view').click()
                 cy.contains('title1').contains('like').click()
 
                 cy.contains('likes').contains('1')
+            })
+            it.only('blog can only be deleted creator user', function () {
+                cy.contains('title1').contains('view').click()
+                cy.contains('title1').contains('remove').click()
+                cy.on('window:confirm', str => {
+                    expect(str).to.eq('Are you sure you want to delete title1?')
+                })
             })
         })
     })
