@@ -24,4 +24,19 @@ describe('Blog app', function () {
             cy.contains('Timmy Turner is logged in')
         })
     })
+    describe('When logged in', function () {
+        beforeEach(function () {
+            cy.login({ username: 'timmy', password: 'turner' })
+        })
+        it('a new blog can be created', function () {
+            cy.contains('New Blog').click()
+            cy.get('.title').type('blogTitle')
+            cy.get('.author').type('blogAuthor')
+            cy.get('.url').type('blogUrl')
+            cy.contains('Save Blog').click()
+            cy.visit('http://localhost:3000/')
+
+            cy.contains('blogTitle')
+        })
+    })
 })

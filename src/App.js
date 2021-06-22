@@ -95,13 +95,13 @@ const App = () => {
     }
     return (
         <div>
-            <h2>blogs</h2>
+            <h2>Blogs</h2>
             <Notification message={message} />
             <div>
                 <p>{user.name} is logged in</p>
                 <button onClick={handleLogout}>Logout</button>
             </div>
-            <Toggleable buttonLabel='new blog'>
+            <Toggleable buttonLabel='New Blog'>
                 <BlogForm createBlog={addBlog} />
             </Toggleable>
             <h2>{user.name}&apos;s Blogs: </h2>
