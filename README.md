@@ -1,5 +1,5 @@
 code for Helsinki Full Stack Open 2021
 
-part 4 exercises 4.1 - 4.23
+part 5 exercises 5.1 - 5.22
 
-blog list application and tests
+Frontend and End to End testing with Jest and Cypress
