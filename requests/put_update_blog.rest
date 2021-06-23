@@ -1,0 +1,10 @@
+PUT http://localhost:3003/api/blogs/6092f4228ee34ec5042547cf
+Content-Type: application/json
+
+{
+    "title": "Ducks For Life",
+    "author": "Tucker Legg",
+    "url": "www.ilovemyducks.com",
+    "likes": 35,
+    "id": "6092f4228ee34ec5042547cf"  
+}
