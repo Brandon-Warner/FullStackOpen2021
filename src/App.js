@@ -6,6 +6,27 @@ import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+const loginStyle = {
+    color: '#130ccc',
+    textDecoration: 'underline',
+    fontFamily: 'Montserrat, sansSerif',
+}
+
+const textStyle = {
+    fontFamily: 'Montserrat, sansSerif',
+}
+
+const loginInputStyle = {
+    fontFamily: 'Montserrat, sansSerif',
+    fontWeight: 'bold',
+}
+
+const buttonStyle = {
+    fontFamily: 'Montserrat, sansSerif',
+    fontWeight: 'bold',
+    color: 'black',
+}
+
 const App = () => {
     const [blogs, setBlogs] = useState([])
     const [username, setUsername] = useState('')
@@ -66,15 +87,16 @@ const App = () => {
     if (user === null) {
         return (
             <div>
-                <h2>Please Log In</h2>
+                <h2 style={loginStyle}>Please Log In</h2>
                 <Notification message={message} />
                 <form onSubmit={handleLogin}>
-                    <div>
+                    <div style={loginInputStyle}>
                         username
                         <input
                             type='text'
                             value={username}
                             className='username'
+                            style={loginInputStyle}
                             onChange={({ target }) => setUsername(target.value)}
                         />
                         <br></br>
@@ -83,10 +105,15 @@ const App = () => {
                             type='password'
                             value={password}
                             className='password'
+                            style={loginInputStyle}
                             onChange={({ target }) => setPassword(target.value)}
                         />
                     </div>
-                    <button type='submit' className='login-button'>
+                    <button
+                        style={buttonStyle}
+                        type='submit'
+                        className='login-button'
+                    >
                         login
                     </button>
                 </form>
@@ -94,12 +121,14 @@ const App = () => {
         )
     }
     return (
-        <div>
+        <div style={textStyle}>
             <h2>Blogs</h2>
             <Notification message={message} />
             <div>
                 <p>{user.name} is logged in</p>
-                <button onClick={handleLogout}>Logout</button>
+                <button style={buttonStyle} onClick={handleLogout}>
+                    Logout
+                </button>
             </div>
             <Toggleable buttonLabel='New Blog'>
                 <BlogForm createBlog={addBlog} />

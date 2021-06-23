@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
 
+const buttonStyle = {
+    fontFamily: 'Montserrat, sansSerif',
+    backgroundColor: '#f7b1a3',
+}
+
 const Toggleable = props => {
     const [visible, setVisible] = useState(false)
 
@@ -12,11 +17,15 @@ const Toggleable = props => {
     return (
         <div>
             <div style={hideWhenVisible}>
-                <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+                <button style={buttonStyle} onClick={toggleVisibility}>
+                    {props.buttonLabel}
+                </button>
             </div>
             <div style={showWhenVisible}>
                 {props.children}
-                <button onClick={toggleVisibility}>cancel</button>
+                <button style={buttonStyle} onClick={toggleVisibility}>
+                    cancel
+                </button>
             </div>
         </div>
     )

@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+const buttonStyle = {
+    fontFamily: 'Montserrat, sansSerif',
+    backgroundColor: '#f7b1a3',
+}
+
+const textStyle = {
+    fontFamily: 'Montserrat, sansSerif',
+}
+
 const BlogForm = ({ createBlog }) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -21,7 +30,7 @@ const BlogForm = ({ createBlog }) => {
     return (
         <div>
             <h2>New Blog</h2>
-            <form className='formDiv' onSubmit={addBlog}>
+            <form style={textStyle} className='formDiv' onSubmit={addBlog}>
                 Title:
                 <input
                     type='text'
@@ -55,7 +64,9 @@ const BlogForm = ({ createBlog }) => {
                     }}
                 />
                 <br></br>
-                <button type='submit'>Save Blog</button>
+                <button style={buttonStyle} type='submit'>
+                    Save Blog
+                </button>
             </form>
         </div>
     )
