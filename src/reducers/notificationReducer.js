@@ -4,7 +4,8 @@ const notificationReducer = (state = [], action) => {
         case 'SET_NOTIFICATION':
             return state.concat(action.content)
         case 'NO_NOTIFICATION':
-            return null
+            state = []
+            return state
         default:
             return state
     }

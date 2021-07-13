@@ -3,13 +3,17 @@ import { useSelector } from 'react-redux'
 
 const Notification = () => {
     const notification = useSelector(state => state.notification)
+    console.log('NOTIFICATION: ', notification)
     const style = {
         border: 'solid',
         padding: 10,
         borderWidth: 1,
     }
-
-    return <div style={style}>{`you added anecdote: ${notification}`}</div>
+    if (notification.length > 0) {
+        return <div style={style}>{`you voted: ${notification}`}</div>
+    } else {
+        return null
+    }
 }
 
 export default Notification
