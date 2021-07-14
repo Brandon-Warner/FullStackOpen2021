@@ -1,10 +1,11 @@
-const notificationReducer = (state = [], action) => {
+const notificationReducer = (state = '', action) => {
     console.log('ACTION: ', action)
     switch (action.type) {
         case 'SET_NOTIFICATION':
-            return state.concat(action.content)
+            state = action.content
+            return state
         case 'NO_NOTIFICATION':
-            state = []
+            state = ''
             return state
         default:
             return state

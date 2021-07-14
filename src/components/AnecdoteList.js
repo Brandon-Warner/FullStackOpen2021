@@ -9,7 +9,7 @@ import {
 const AnecdoteList = props => {
     const anecdotes = useSelector(state => state.anecdotes)
     const filter = useSelector(state => state.filter)
-    console.log('filter: ', filter)
+    // console.log('filter: ', filter)
     const dispatch = useDispatch()
 
     const vote = id => {
