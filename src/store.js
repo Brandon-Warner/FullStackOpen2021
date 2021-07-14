@@ -1,11 +1,12 @@
 import { createStore, combineReducers } from 'redux'
-import anecdoteReducer, { createAnecdote } from './reducers/anecdoteReducer'
+import anecdoteReducer from './reducers/anecdoteReducer'
 import notificationReducer from './reducers/notificationReducer'
-import { notificationChange } from './reducers/notificationReducer'
+import filterReducer from './reducers/filterReducer'
 
 const reducer = combineReducers({
     anecdotes: anecdoteReducer,
     notification: notificationReducer,
+    filter: filterReducer,
 })
 
 const store = createStore(
@@ -14,9 +15,5 @@ const store = createStore(
 )
 
 console.log(store.getState())
-
-// store.subscribe(() => console.log(store.getState()))
-// store.dispatch(notificationChange('SET_NOTIFICATION'))
-// store.dispatch(createAnecdote('blahblahblahlbah'))
 
 export default store
