@@ -9,11 +9,9 @@ import {
 const AnecdoteList = props => {
     const anecdotes = useSelector(state => state.anecdotes)
     const filter = useSelector(state => state.filter)
-    // console.log('filter: ', filter)
     const dispatch = useDispatch()
 
     const vote = id => {
-        console.log('vote', id)
         dispatch(addVote(id))
     }
 
@@ -38,7 +36,7 @@ const AnecdoteList = props => {
                             has {anecdote.votes}
                             <button
                                 onClick={() => {
-                                    vote(anecdote.id)
+                                vote(anecdote.id)
                                     dispatch(
                                         notificationChange(anecdote.content)
                                     )

@@ -14,9 +14,7 @@ const AnecdoteForm = props => {
 
     return (
         <form onSubmit={addAnecdote}>
-            <div>
-                <input name='anecdote' />
-            </div>
+            <input name='anecdote' />
             <button type='submit'>create</button>
         </form>
     )
