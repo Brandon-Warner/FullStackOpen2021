@@ -11,12 +11,7 @@ const reducer = combineReducers({
     filter: filterReducer,
 })
 
-const store = createStore(
-    reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__(),
-    composeWithDevTools(applyMiddleware(thunk))
-)
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 
 console.log(store.getState())
 export default store
