@@ -17,14 +17,16 @@ const AnecdoteList = props => {
         if (filter === 'NONE') {
             return ' '
         }
-        return filter
+        return filter.toLowerCase()
     }
 
     return (
         <div>
             {anecdotes
                 .filter(a =>
-                    a.content.includes(filterStatus(filter)) ? a : ''
+                    a.content.toLowerCase().includes(filterStatus(filter))
+                        ? a
+                        : ''
                 )
                 .sort((a, b) => (a.votes > b.votes ? -1 : 1))
                 .map(anecdote => (
