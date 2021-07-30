@@ -20,7 +20,6 @@ const LoginForm = ({
                         className='username'
                         onChange={({ target }) => setUsername(target.value)}
                     />
-                    <br></br>
                     <Form.Label>password</Form.Label>
 
                     <Form.Control
