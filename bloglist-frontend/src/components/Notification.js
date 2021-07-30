@@ -1,20 +1,13 @@
 import React from 'react'
 
-const Notification = ({ message }) => {
-    const errorStyle = {
-        color: 'red',
-        fontSize: '16',
-    }
+import { Alert } from 'react-bootstrap'
 
-    const messageStyle = {
-        color: 'green',
-        fontSize: '16',
-    }
+const Notification = ({ message }) => {
     if (message === null) return null
     else if (message.includes('Wrong')) {
-        return <h3 style={errorStyle}>{message}</h3>
+        return <Alert variant='danger'>{message}</Alert>
     } else if (message.includes('blog')) {
-        return <h3 style={messageStyle}>{message}</h3>
+        return <Alert variant='success'>{message}</Alert>
     }
 }
 

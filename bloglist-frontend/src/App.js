@@ -17,6 +17,10 @@ const App = () => {
 
     useEffect(() => {
         blogService.getAll().then(blogs => setBlogs(blogs))
+        setMessage('welcome to the blog app')
+        setTimeout(() => {
+            setMessage(null)
+        }, 5000)
     }, [update])
 
     useEffect(() => {
