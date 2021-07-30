@@ -1,6 +1,8 @@
 /* eslint-disable indent */
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
+import { Button } from 'react-bootstrap'
+
 const Blog = ({ blog, setUpdate }) => {
     const [visible, setVisible] = useState(false)
 
@@ -16,26 +18,39 @@ const Blog = ({ blog, setUpdate }) => {
         return (
             <div className='blog'>
                 {blog.title} {blog.author}
-                <button onClick={() => setVisible(true)} className='view'>
+                <Button
+                    variant='info'
+                    size='sm'
+                    onClick={() => setVisible(true)}
+                    className='view'
+                >
                     view
-                </button>
+                </Button>
             </div>
         )
     }
     return (
         <div className='blog'>
             {blog.title} {blog.author}{' '}
-            <button onClick={() => setVisible(false)}>hide</button>
+            <Button
+                variant='secondary'
+                size='sm'
+                onClick={() => setVisible(false)}
+            >
+                hide
+            </Button>
             <br></br>
             {blog.url} <br></br>
             likes: {blog.likes}{' '}
-            <button onClick={like} className='like'>
+            <Button variant='success' size='sm' onClick={like} className='like'>
                 like
-            </button>
+            </Button>
             <br></br>
             {blog.user.name}
             <br></br>
-            <button
+            <Button
+                variant='danger'
+                size='sm'
                 onClick={() => {
                     if (
                         window.confirm(
@@ -48,7 +63,7 @@ const Blog = ({ blog, setUpdate }) => {
                 }}
             >
                 remove
-            </button>
+            </Button>
         </div>
     )
 }

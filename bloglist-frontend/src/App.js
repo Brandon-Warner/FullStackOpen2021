@@ -6,6 +6,7 @@ import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
+import { Button } from 'react-bootstrap'
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -89,7 +90,9 @@ const App = () => {
             <Notification message={message} />
             <div>
                 <p>{user.name} is logged in</p>
-                <button onClick={handleLogout}>Logout</button>
+                <Button variant='primary' onClick={handleLogout}>
+                    Logout
+                </Button>
             </div>
             <Toggleable buttonLabel='New Blog'>
                 <BlogForm createBlog={addBlog} />
