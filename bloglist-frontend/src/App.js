@@ -66,7 +66,7 @@ const App = () => {
 
     if (user === null) {
         return (
-            <div>
+            <div className='container'>
                 <h2>Please Log In</h2>
                 <Notification message={message} />
                 <LoginForm
@@ -80,7 +80,7 @@ const App = () => {
         )
     }
     return (
-        <div>
+        <div className='container'>
             <h2>Blogs</h2>
             <Notification message={message} />
             <div>

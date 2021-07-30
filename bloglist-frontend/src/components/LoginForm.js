@@ -1,4 +1,5 @@
 import React from 'react'
+import { Form, Button } from 'react-bootstrap'
 
 const LoginForm = ({
     username,
@@ -9,28 +10,35 @@ const LoginForm = ({
 }) => {
     return (
         <div>
-            <form onSubmit={handleLogin}>
-                <div>
-                    username
-                    <input
+            <Form onSubmit={handleLogin}>
+                <Form.Group>
+                    <Form.Label>username</Form.Label>
+
+                    <Form.Control
                         type='text'
                         value={username}
                         className='username'
                         onChange={({ target }) => setUsername(target.value)}
                     />
                     <br></br>
-                    password
-                    <input
+                    <Form.Label>password</Form.Label>
+
+                    <Form.Control
                         type='password'
                         value={password}
                         className='password'
                         onChange={({ target }) => setPassword(target.value)}
                     />
-                </div>
-                <button type='submit' className='login-button'>
-                    login
-                </button>
-            </form>
+
+                    <Button
+                        variant='primary'
+                        type='submit'
+                        className='login-button'
+                    >
+                        login
+                    </Button>
+                </Form.Group>
+            </Form>
         </div>
     )
 }
