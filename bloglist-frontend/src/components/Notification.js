@@ -6,7 +6,7 @@ const Notification = ({ message }) => {
     if (message === null) return null
     else if (message.includes('Wrong')) {
         return <Alert variant='danger'>{message}</Alert>
-    } else if (message.includes('blog')) {
+    } else if (message.includes('logged')) {
         return <Alert variant='success'>{message}</Alert>
     }
 }

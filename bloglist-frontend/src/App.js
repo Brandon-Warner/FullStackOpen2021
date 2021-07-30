@@ -13,16 +13,11 @@ const App = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
-    const [update, setUpdate] = useState(null)
     const [message, setMessage] = useState(null)
 
     useEffect(() => {
         blogService.getAll().then(blogs => setBlogs(blogs))
-        setMessage('welcome to the blog app')
-        setTimeout(() => {
-            setMessage(null)
-        }, 5000)
-    }, [update])
+    }, [blogs])
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -49,6 +44,10 @@ const App = () => {
             setUser(user)
             setUsername('')
             setPassword('')
+            setMessage(`${user.username} has logged in!`)
+            setTimeout(() => {
+                setMessage(null)
+            }, 5000)
         } catch (exception) {
             console.log('error', exception)
             setMessage('Wrong username or password')
@@ -102,13 +101,7 @@ const App = () => {
                 .sort((a, b) => b.likes - a.likes)
                 .map(blog => {
                     if (blog.user.username === user.username) {
-                        return (
-                            <Blog
-                                key={blog.id}
-                                blog={blog}
-                                setUpdate={setUpdate}
-                            />
-                        )
+                        return <Blog key={blog.id} blog={blog} />
                     } else {
                         return null
                     }

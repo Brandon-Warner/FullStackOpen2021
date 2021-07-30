@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import blogService from '../services/blogs'
 import { Button } from 'react-bootstrap'
 
-const Blog = ({ blog, setUpdate }) => {
+const Blog = ({ blog }) => {
     const [visible, setVisible] = useState(false)
 
     const like = async event => {
@@ -11,7 +11,6 @@ const Blog = ({ blog, setUpdate }) => {
         const likes = blog.likes + 1
         const newBlog = { ...blog, likes }
         await blogService.update(blog.id, newBlog)
-        setUpdate(Math.floor(Math.random() * 100))
     }
 
     if (!visible) {
@@ -58,7 +57,6 @@ const Blog = ({ blog, setUpdate }) => {
                         )
                     ) {
                         blogService.removeBlog(blog.id)
-                        setUpdate(Math.floor(Math.random() * 100))
                     }
                 }}
             >
