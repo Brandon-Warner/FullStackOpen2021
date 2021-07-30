@@ -43,6 +43,7 @@ const Blog = ({ blog, setUpdate }) => {
                         )
                     ) {
                         blogService.removeBlog(blog.id)
+                        setUpdate(Math.floor(Math.random() * 100))
                     }
                 }}
             >

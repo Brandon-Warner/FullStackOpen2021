@@ -5,6 +5,7 @@ import BlogForm from './components/BlogForm'
 import Toggleable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/LoginForm'
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -68,28 +69,13 @@ const App = () => {
             <div>
                 <h2>Please Log In</h2>
                 <Notification message={message} />
-                <form onSubmit={handleLogin}>
-                    <div>
-                        username
-                        <input
-                            type='text'
-                            value={username}
-                            className='username'
-                            onChange={({ target }) => setUsername(target.value)}
-                        />
-                        <br></br>
-                        password
-                        <input
-                            type='password'
-                            value={password}
-                            className='password'
-                            onChange={({ target }) => setPassword(target.value)}
-                        />
-                    </div>
-                    <button type='submit' className='login-button'>
-                        login
-                    </button>
-                </form>
+                <LoginForm
+                    username={username}
+                    password={password}
+                    setUsername={setUsername}
+                    setPassword={setPassword}
+                    handleLogin={handleLogin}
+                />
             </div>
         )
     }
