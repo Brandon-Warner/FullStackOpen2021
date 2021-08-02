@@ -1,5 +1,13 @@
-Full stack open Part 7 - Extended Bloglist
+Application for storing blogs to read later - each blog is saved with the title, author, and url of the blog.
 
-refactoring code from an existing exercise to add Redux and UI Framework
+Frontend built with React.js, React-Bootstrap UI Library
+Backend built with Node.js, Express, and the data is stored in MongoDB
 
-ex. 7.9 - 7.21
+To Do: 
+- Install Redux and implement Redux store
+- Features such as: 'read'/'unread', display all users & their blogs
+
+Video of app functionaliy: 
+
+https://user-images.githubusercontent.com/75649322/127598515-4b23f820-77e0-4d61-895d-b3ebfc942a36.mov
+
