@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
@@ -13,7 +15,8 @@ const App = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
-    const [message, setMessage] = useState(null)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         blogService.getAll().then(blogs => setBlogs(blogs))
@@ -44,16 +47,10 @@ const App = () => {
             setUser(user)
             setUsername('')
             setPassword('')
-            setMessage(`${user.username} has logged in!`)
-            setTimeout(() => {
-                setMessage(null)
-            }, 5000)
+            dispatch(setNotification('Welcome to blogslist!'))
         } catch (exception) {
             console.log('error', exception)
-            setMessage('Wrong username or password')
-            setTimeout(() => {
-                setMessage(null)
-            }, 5000)
+            dispatch(setNotification('Wrong username or password'))
         }
     }
 
@@ -72,7 +69,7 @@ const App = () => {
         return (
             <div className='container'>
                 <h2>Please Log In</h2>
-                <Notification message={message} />
+                <Notification />
                 <LoginForm
                     username={username}
                     password={password}
@@ -86,7 +83,7 @@ const App = () => {
     return (
         <div className='container'>
             <h2>Blogs</h2>
-            <Notification message={message} />
+            <Notification />
             <div>
                 <p>{user.name} is logged in</p>
                 <Button variant='primary' onClick={handleLogout}>
