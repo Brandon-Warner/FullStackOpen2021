@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
 
 const Notification = () => {
-    const notification = useSelector(state => state)
+    const notification = useSelector(state => state.notification)
     if (notification === 'Wrong username or password') {
         return <Alert variant='danger'>{notification}</Alert>
     } else if (notification === 'Welcome to blogslist!') {

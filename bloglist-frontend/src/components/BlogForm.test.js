@@ -6,7 +6,7 @@ import BlogForm from './BlogForm'
 test('form receives title, author, url when new blog is created', () => {
     const createBlog = jest.fn()
 
-    const component = render(<BlogForm createBlog={createBlog} />)
+    const component = render(<BlogForm />)
 
     const title = component.container.querySelector('.title')
     const author = component.container.querySelector('.author')
