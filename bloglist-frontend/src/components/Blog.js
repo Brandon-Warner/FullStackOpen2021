@@ -1,16 +1,17 @@
 /* eslint-disable indent */
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { likeBlog } from '../reducers/blogReducer'
 import blogService from '../services/blogs'
 import { Button } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
     const [visible, setVisible] = useState(false)
 
-    const like = async event => {
-        event.preventDefault()
-        const likes = blog.likes + 1
-        const newBlog = { ...blog, likes }
-        await blogService.update(blog.id, newBlog)
+    const dispatch = useDispatch()
+
+    const like = blogId => {
+        dispatch(likeBlog(blogId))
     }
 
     if (!visible) {
@@ -41,7 +42,12 @@ const Blog = ({ blog }) => {
             <br></br>
             {blog.url} <br></br>
             likes: {blog.likes}{' '}
-            <Button variant='success' size='sm' onClick={like} className='like'>
+            <Button
+                variant='success'
+                size='sm'
+                onClick={() => like(blog.id)}
+                className='like'
+            >
                 like
             </Button>
             <br></br>

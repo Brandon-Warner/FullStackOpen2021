@@ -30,11 +30,14 @@ const postBlog = async blogObject => {
     return response.data
 }
 
-const update = async (blogId, newObject) => {
+const addLike = async (blogId) => {
     const config = {
         headers: { Authorization: token },
     }
-    const response = await axios.put(`${baseUrl}/${blogId}`, newObject, config)
+    const blogs = await getAll()
+    const blog = blogs.find(b => b.id === blogId)
+    const object = { ...blog, likes: blog.likes + 1 }
+    const response = await axios.put(`${baseUrl}/${blogId}`, object, config)
     console.log('response data: ', response.data)
     return response.data
 }
@@ -51,4 +54,4 @@ const removeBlog = async blogId => {
     return response.data
 }
 
-export default { getAll, create, setToken, postBlog, update, removeBlog }
+export default { getAll, create, setToken, postBlog, addLike, removeBlog }
