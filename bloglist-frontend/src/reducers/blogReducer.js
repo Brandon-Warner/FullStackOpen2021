@@ -31,6 +31,16 @@ export const likeBlog = blogId => {
     }
 }
 
+export const deleteBlog = blogId => {
+    return async dispatch => {
+        const removedBlog = await blogService.removeBlog(blogId)
+        dispatch({
+            type: 'DELETE_BLOG',
+            data: removedBlog,
+        })
+    }
+}
+
 const blogReducer = (state = [], action) => {
     switch (action.type) {
         case 'INIT_BLOGS':
@@ -45,6 +55,9 @@ const blogReducer = (state = [], action) => {
                 action.data,
                 ...state.slice(index + 1),
             ]
+        case 'DELETE_BLOG':
+            console.log('ACTION.DATA: ', action.data)
+            return [...state.filter(b => b !== action.data.id)]
         default:
             return state
     }

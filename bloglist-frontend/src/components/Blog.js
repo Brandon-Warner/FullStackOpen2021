@@ -1,8 +1,7 @@
 /* eslint-disable indent */
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { likeBlog } from '../reducers/blogReducer'
-import blogService from '../services/blogs'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import { Button } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
@@ -13,6 +12,7 @@ const Blog = ({ blog }) => {
     const like = blogId => {
         dispatch(likeBlog(blogId))
     }
+    const removeBlog = blogId => dispatch(deleteBlog(blogId))
 
     if (!visible) {
         return (
@@ -62,7 +62,7 @@ const Blog = ({ blog }) => {
                             `Are you sure you want to delete ${blog.title}?`
                         )
                     ) {
-                        blogService.removeBlog(blog.id)
+                        removeBlog(blog.id)
                     }
                 }}
             >
