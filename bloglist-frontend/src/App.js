@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
-import Blog from './components/Blog'
+// import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import Toggleable from './components/Toggleable'
@@ -10,6 +10,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import { Button } from 'react-bootstrap'
+import BlogList from './components/BlogList'
 
 const App = () => {
     const [username, setUsername] = useState('')
@@ -89,15 +90,7 @@ const App = () => {
                 <BlogForm />
             </Toggleable>
             <h2>{user.name}&apos;s Blogs: </h2>
-            {blogs
-                .sort((a, b) => b.likes - a.likes)
-                .map(blog => {
-                    if (blog.user.username === user.username) {
-                        return <Blog key={blog.id} blog={blog} />
-                    } else {
-                        return null
-                    }
-                })}
+            <BlogList blogs={blogs} user={user} />
         </div>
     )
 }
