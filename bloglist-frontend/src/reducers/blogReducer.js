@@ -33,10 +33,10 @@ export const likeBlog = blogId => {
 
 export const deleteBlog = blogId => {
     return async dispatch => {
-        const removedBlog = await blogService.removeBlog(blogId)
+        await blogService.removeBlog(blogId)
         dispatch({
             type: 'DELETE_BLOG',
-            data: removedBlog,
+            data: blogId,
         })
     }
 }
@@ -50,14 +50,10 @@ const blogReducer = (state = [], action) => {
         case 'LIKE_BLOG':
             // eslint-disable-next-line no-case-declarations
             const index = state.findIndex(b => b.id === action.data.id)
-            return [
-                ...state.slice(0, index),
-                action.data,
-                ...state.slice(index + 1),
-            ]
+            return [...state.slice(0, index), action.data, ...state.slice(index + 1)]
         case 'DELETE_BLOG':
             console.log('ACTION.DATA: ', action.data)
-            return [...state.filter(b => b !== action.data.id)]
+            return [...state.filter(b => b.id !== action.data)]
         default:
             return state
     }
