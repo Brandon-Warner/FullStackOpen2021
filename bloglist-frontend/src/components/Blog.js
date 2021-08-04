@@ -6,19 +6,9 @@ import { Button } from 'react-bootstrap'
 
 const Blog = ({ blog, user }) => {
     const [visible, setVisible] = useState(false)
-    const [removeVisible, setRemoveVisible] = useState(false)
 
     const hideWhenVisible = { display: visible ? 'none' : '' }
     const showWhenVisible = { display: visible ? '' : 'none' }
-
-    const hideIfNotUser = { display: removeVisible ? 'none' : '' }
-
-    const rules = () => {
-        setVisible(true)
-        if (blog.user.username !== user.username) {
-            setRemoveVisible(true)
-        }
-    }
 
     const dispatch = useDispatch()
     const like = blogId => {
@@ -27,10 +17,10 @@ const Blog = ({ blog, user }) => {
     const removeBlog = blogId => dispatch(deleteBlog(blogId))
 
     return (
-        <div style={hideIfNotUser}>
+        <div>
             <div className='blog'>
                 <div style={hideWhenVisible}>
-                    <div onClick={rules}>
+                    <div>
                         {blog.title}
                         <br />
                         by: {blog.author}
@@ -57,7 +47,7 @@ const Blog = ({ blog, user }) => {
                     like
                 </Button>
                 <br></br>
-                {blog.user.name}
+                {blog.user.name || user.name}
                 <br></br>
                 <Button
                     variant='danger'

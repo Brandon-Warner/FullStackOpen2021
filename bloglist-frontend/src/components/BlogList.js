@@ -2,13 +2,16 @@ import React from 'react'
 import Blog from './Blog'
 
 const BlogList = ({ blogs, user }) => {
+    console.log('BLOGLIST blogs: ', blogs)
+    console.log('BLOGLIST user :', user)
     return (
         <div>
             {blogs
                 .sort((a, b) => b.likes - a.likes)
-                .map(blog => (
-                    <Blog key={blog.id} blog={blog} user={user} />
-                ))}
+                .map(blog => {
+                    if (blog.user === user.id || blog.user.id === user.id)
+                        return <Blog key={blog.id} blog={blog} user={user} />
+                })}
         </div>
     )
 }
