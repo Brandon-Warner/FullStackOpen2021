@@ -12,7 +12,8 @@ export const initializeUsers = () => {
 }
 
 const userReducer = (state = [], action) => {
-    switch (action.data) {
+    console.log('ACTION DATA:', action.data)
+    switch (action.type) {
         case 'INIT_USERS':
             return action.data
         default:

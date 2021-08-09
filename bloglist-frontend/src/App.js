@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
+import { initializeUsers } from './reducers/userReducer'
 // import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
@@ -22,6 +23,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(initializeBlogs())
+        dispatch(initializeUsers())
     }, [dispatch])
 
     useEffect(() => {
