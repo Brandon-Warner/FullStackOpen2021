@@ -4,8 +4,9 @@ import Notification from './Notification'
 const Home = ({ user }) => {
     return (
         <div className='container'>
-            <h2>Blogs</h2>
             <Notification />
+            <h2>Blogs</h2>
+            <br />
             <div>
                 <p>
                     <em>{user.name} is logged in</em>
@@ -13,13 +14,10 @@ const Home = ({ user }) => {
             </div>
             <div>
                 <p>Welcome to the BlogsList application.</p>
+                <p>Save blogs that you have not read or for personal use later on.</p>
                 <p>
-                    Used to save blogs that you want to save for reading or save for personal use
-                    later on.
-                </p>
-                <p>
-                    Select Users to view blogs by user. Select Blogs to see the full list of
-                    currently saved Blogs
+                    To view blogs by user: select <em>Users</em>. To see the full list of currently
+                    saved Blogs: select <em>Blogs</em>.
                 </p>
             </div>
         </div>

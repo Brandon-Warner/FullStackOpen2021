@@ -17,6 +17,7 @@ import LoginForm from './components/LoginForm'
 
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 
 const App = () => {
     const [username, setUsername] = useState('')
@@ -91,19 +92,34 @@ const App = () => {
     return (
         <div className='container'>
             <div>
-                <Link style={padding} to='/'>
-                    home
-                </Link>
-                <Link style={padding} to='/users'>
-                    users
-                </Link>
-                <Link style={padding} to='/blogs'>
-                    blogs
-                </Link>
-                {user.name} is logged in{' '}
-                <Button variant='secondary' onClick={handleLogout} size='sm'>
-                    Logout
-                </Button>
+                <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+                    <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+                    <Navbar.Collapse id='responseive-navbar-nav'>
+                        <Nav className='mr-auto'>
+                            <Nav.Link href='#' as='span'>
+                                <Link style={padding} to='/'>
+                                    home
+                                </Link>
+                            </Nav.Link>
+                            <Nav.Link href='#' as='span'>
+                                <Link style={padding} to='/users'>
+                                    users
+                                </Link>
+                            </Nav.Link>
+                            <Nav.Link href='#' as='span'>
+                                <Link style={padding} to='/blogs'>
+                                    blogs
+                                </Link>
+                            </Nav.Link>
+                            <Nav.Link href='#' as='span'>
+                                {user.name} is logged in{' '}
+                                <Button variant='secondary' onClick={handleLogout} size='sm'>
+                                    Logout
+                                </Button>
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
             </div>
             <Switch>
                 <Route path='/users/:id'>
