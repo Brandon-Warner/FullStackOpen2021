@@ -1,15 +1,10 @@
 /* eslint-disable indent */
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import { Button } from 'react-bootstrap'
 
-const Blog = ({ blog, user }) => {
-    const [visible, setVisible] = useState(false)
-
-    const hideWhenVisible = { display: visible ? 'none' : '' }
-    const showWhenVisible = { display: visible ? '' : 'none' }
-
+const Blog = ({ blog }) => {
     const dispatch = useDispatch()
     const like = blogId => {
         dispatch(likeBlog(blogId))
@@ -18,36 +13,23 @@ const Blog = ({ blog, user }) => {
 
     return (
         <div>
-            <div className='blog'>
-                <div style={hideWhenVisible}>
-                    <div>
-                        {blog.title}
-                        <br />
-                        by: {blog.author}
-                    </div>
-                    <Button
-                        variant='info'
-                        size='sm'
-                        onClick={() => setVisible(true)}
-                        className='view'
-                    >
-                        view
-                    </Button>
-                </div>
-            </div>
-            <div style={showWhenVisible}>
-                {blog.title} {blog.author}
-                <Button variant='secondary' size='sm' onClick={() => setVisible(false)}>
-                    hide
-                </Button>
+            <h1>Blogs</h1>
+            <br />
+            <div>
+                <h2>{blog.title}</h2>
+                by {blog.author}
                 <br />
-                {blog.url} <br />
-                likes: {blog.likes}{' '}
+                <br />
+                <a href={`${blog.url}`}>{blog.url}</a>
+                <br />
+                <em>likes: </em>
+                {blog.likes}{' '}
                 <Button variant='success' size='sm' onClick={() => like(blog.id)} className='like'>
                     like
                 </Button>
                 <br></br>
-                {blog.user.name || user.name}
+                <em>added by: </em>
+                {blog.user.name}
                 <br></br>
                 <Button
                     variant='danger'

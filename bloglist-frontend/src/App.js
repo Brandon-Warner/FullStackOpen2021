@@ -8,7 +8,8 @@ import Home from './components/Home'
 import Users from './components/Users'
 import User from './components/User'
 import LoginPage from './components/LoginPage'
-import BlogList from './components/BlogList'
+import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -16,22 +17,6 @@ import LoginForm from './components/LoginForm'
 
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-
-// const User = ({ user }) => {
-//     console.log('USER COMPONENT user: ', user)
-//     return (
-//         <div>
-//             <h2>{user.name}</h2>
-//             <br />
-//             <h3>added blogs</h3>
-//             <ul>
-//                 {user.blogs.map(blog => (
-//                     <li key={blog.id}>{blog.title}</li>
-//                 ))}
-//             </ul>
-//         </div>
-//     )
-// }
 
 const App = () => {
     const [username, setUsername] = useState('')
@@ -42,8 +27,12 @@ const App = () => {
     const blogs = useSelector(state => state.blogs)
     const users = useSelector(state => state.users)
 
-    const match = useRouteMatch('/users/:id')
-    const userMatch = match ? users.find(user => user.id === match.params.id) : null
+    const match_user = useRouteMatch('/users/:id')
+    const match_blog = useRouteMatch('/blogs/:id')
+    console.log('match_blog: ', match_blog)
+    const userMatch = match_user ? users.find(user => user.id === match_user.params.id) : null
+    const blogMatch = match_blog ? blogs.find(blog => blog.id === match_blog.params.id) : null
+    console.log('blogMatch: ', blogMatch)
 
     const padding = {
         padding: 5,
@@ -109,7 +98,7 @@ const App = () => {
                     users
                 </Link>
                 <Link style={padding} to='/blogs'>
-                    notes
+                    blogs
                 </Link>
                 {user.name} is logged in{' '}
                 <Button variant='secondary' onClick={handleLogout} size='sm'>
@@ -123,8 +112,11 @@ const App = () => {
                 <Route path='/users'>
                     <Users users={users} user={user} />
                 </Route>
+                <Route path='/blogs/:id'>
+                    <Blog blog={blogMatch} />
+                </Route>
                 <Route path='/blogs'>
-                    <BlogList />
+                    <Blogs blogs={blogs} />
                 </Route>
                 <Route path='/login'>
                     <LoginForm />
