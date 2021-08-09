@@ -4,18 +4,13 @@ import BlogForm from './BlogForm'
 import BlogList from './BlogList'
 import Toggleable from './Toggleable'
 
-import { Button } from 'react-bootstrap'
-
-const Home = ({ user, blogs, handleLogout }) => {
+const Home = ({ user, blogs  }) => {
     return (
         <div className='container'>
             <h2>Blogs</h2>
             <Notification />
             <div>
                 <p>{user.name} is logged in</p>
-                <Button variant='primary' onClick={handleLogout}>
-                    Logout
-                </Button>
             </div>
             <Toggleable buttonLabel='New Blog'>
                 <BlogForm />

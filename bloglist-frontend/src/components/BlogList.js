@@ -2,8 +2,6 @@ import React from 'react'
 import Blog from './Blog'
 
 const BlogList = ({ blogs, user }) => {
-    console.log('BLOGLIST blogs: ', blogs)
-    console.log('BLOGLIST user :', user)
     return (
         <div>
             {blogs
