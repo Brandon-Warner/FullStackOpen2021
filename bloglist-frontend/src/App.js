@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
-// import Blog from './components/Blog'
+
 import Notification from './components/Notification'
-import BlogForm from './components/BlogForm'
-import Toggleable from './components/Toggleable'
+import Home from './components/Home'
+import Users from './components/Users'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
-import { Button } from 'react-bootstrap'
 import BlogList from './components/BlogList'
+
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 const App = () => {
     const [username, setUsername] = useState('')
@@ -20,6 +21,11 @@ const App = () => {
 
     const dispatch = useDispatch()
     const blogs = useSelector(state => state.blogs)
+    const users = useSelector(state => state.users)
+
+    const padding = {
+        padding: 5,
+    }
 
     useEffect(() => {
         dispatch(initializeBlogs())
@@ -77,19 +83,36 @@ const App = () => {
     }
     return (
         <div className='container'>
-            <h2>Blogs</h2>
-            <Notification />
-            <div>
-                <p>{user.name} is logged in</p>
-                <Button variant='primary' onClick={handleLogout}>
-                    Logout
-                </Button>
-            </div>
-            <Toggleable buttonLabel='New Blog'>
-                <BlogForm />
-            </Toggleable>
-            <h2>{user.name}&apos;s Blogs: </h2>
-            <BlogList blogs={blogs} user={user} />
+            <Router>
+                <div>
+                    <Link style={padding} to='/'>
+                        home
+                    </Link>
+                    <Link style={padding} to='/users'>
+                        users
+                    </Link>
+                    <Link style={padding} to='/blogs'>
+                        notes
+                    </Link>
+                    <Link style={padding} to='/login'>
+                        login
+                    </Link>
+                </div>
+                <Switch>
+                    <Route path='/users'>
+                        <Users users={users} />
+                    </Route>
+                    <Route path='/blogs'>
+                        <BlogList />
+                    </Route>
+                    <Route path='/login'>
+                        <LoginForm />
+                    </Route>
+                    <Route path='/'>
+                        <Home user={user} blogs={blogs} handleLogout={handleLogout} />
+                    </Route>
+                </Switch>
+            </Router>
         </div>
     )
 }
