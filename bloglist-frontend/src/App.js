@@ -4,13 +4,13 @@ import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 
-import Notification from './components/Notification'
 import Home from './components/Home'
 import Users from './components/Users'
+import LoginPage from './components/LoginPage'
+import BlogList from './components/BlogList'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
-import BlogList from './components/BlogList'
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -68,17 +68,13 @@ const App = () => {
 
     if (user === null) {
         return (
-            <div className='container'>
-                <h2>Please Log In</h2>
-                <Notification />
-                <LoginForm
-                    username={username}
-                    password={password}
-                    setUsername={setUsername}
-                    setPassword={setPassword}
-                    handleLogin={handleLogin}
-                />
-            </div>
+            <LoginPage
+                username={username}
+                password={password}
+                setUsername={setUsername}
+                setPassword={setPassword}
+                handleLogin={handleLogin}
+            />
         )
     }
     return (
@@ -100,7 +96,7 @@ const App = () => {
                 </div>
                 <Switch>
                     <Route path='/users'>
-                        <Users users={users} />
+                        <Users users={users} user={user} />
                     </Route>
                     <Route path='/blogs'>
                         <BlogList />
