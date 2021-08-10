@@ -1,4 +1,5 @@
 import React from 'react'
+import { ListGroup } from 'react-bootstrap'
 
 const User = ({ user }) => {
     return (
@@ -6,11 +7,11 @@ const User = ({ user }) => {
             <h2>{user.name}</h2>
             <br />
             <h3>added blogs</h3>
-            <ul>
+            <ListGroup>
                 {user.blogs.map(blog => (
-                    <li key={blog.id}>{blog.title}</li>
+                    <ListGroup.Item key={blog.id}>{blog.title}</ListGroup.Item>
                 ))}
-            </ul>
+            </ListGroup>
         </div>
     )
 }
