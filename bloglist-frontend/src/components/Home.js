@@ -5,26 +5,29 @@ import { Card } from 'react-bootstrap'
 
 const Home = ({ user }) => {
     return (
-        <div className='container'>
-            <Notification />
-            <h2>Blogs</h2>
-            <br />
+        <div>
             <div>
-                <p>
-                    <em>{user.name} is logged in</em>
-                </p>
+                <Notification />
             </div>
-            <div>
-                <Card body>
-                    <p>Welcome to the BlogsList application.</p>
-                    <p>Save blogs that you have not read or for personal use later on.</p>
-                </Card>
-                <Card body>
+            <div className='container'>
+                <br />
+                <div>
                     <p>
-                        To view blogs by user: select <em>Users</em>. To see the full list of
-                        currently saved Blogs: select <em>Blogs</em>.
+                        <em>{user.name} is logged in</em>
                     </p>
-                </Card>
+                </div>
+                <div>
+                    <Card body>
+                        <p>Welcome to the BlogsList application.</p>
+                        <p>Save blogs that you have not read or for personal use later on.</p>
+                    </Card>
+                    <Card body>
+                        <p>
+                            To view blogs by user: select <em>Users</em>. To see the full list of
+                            currently saved Blogs: select <em>Blogs</em>.
+                        </p>
+                    </Card>
+                </div>
             </div>
         </div>
     )

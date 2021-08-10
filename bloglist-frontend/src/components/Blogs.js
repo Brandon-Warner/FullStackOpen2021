@@ -7,7 +7,7 @@ import { Table } from 'react-bootstrap'
 
 const Blogs = ({ blogs }) => {
     return (
-        <div>
+        <div className='container'>
             <h1>Blogs</h1>
             <br />
             <Toggleable buttonLabel='New Blog'>

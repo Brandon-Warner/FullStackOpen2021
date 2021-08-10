@@ -89,7 +89,7 @@ const App = () => {
         )
     }
     return (
-        <Container>
+        <Container fluid>
             <Navigation padding={padding} handleLogout={handleLogout} user={user} />
             <Switch>
                 <Route path='/users/:id'>

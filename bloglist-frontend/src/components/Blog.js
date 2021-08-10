@@ -27,7 +27,7 @@ const Blog = ({ blog }) => {
     }
 
     return (
-        <div>
+        <div className='container'>
             <h1>Blogs</h1>
             <br />
 

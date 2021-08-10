@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap'
 
 const Users = ({ users, user }) => {
     return (
-        <div>
+        <div className='container'>
             <h1>Blogs</h1>
             <br />
             {user.name} is logged in
@@ -15,7 +15,7 @@ const Users = ({ users, user }) => {
                 <thead>
                     <tr>
                         <td>
-                            <b>user</b>
+                            <b>users</b>
                         </td>
                         <td>
                             <b>blogs created</b>

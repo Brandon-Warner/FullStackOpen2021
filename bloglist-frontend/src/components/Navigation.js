@@ -5,7 +5,13 @@ import { Navbar, Nav, Button } from 'react-bootstrap'
 const Navigation = ({ padding, handleLogout, user }) => {
     return (
         <div>
-            <Navbar collapseOnSelect expand='lg' bg='primary' variant='dark'>
+            <Navbar
+                collapseOnSelect
+                expand='lg'
+                bg='primary'
+                variant='dark'
+                style={{ width: '100%' }}
+            >
                 <Navbar.Brand variant='primary'>Bloglist App</Navbar.Brand>
                 <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                 <Navbar.Collapse id='responseive-navbar-nav'>
