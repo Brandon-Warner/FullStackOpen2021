@@ -4,16 +4,16 @@ import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 
+import blogService from './services/blogs'
+import loginService from './services/login'
+
 import Home from './components/Home'
 import Users from './components/Users'
 import User from './components/User'
 import LoginPage from './components/LoginPage'
+import LoginForm from './components/LoginForm'
 import Blogs from './components/Blogs'
 import Blog from './components/Blog'
-
-import blogService from './services/blogs'
-import loginService from './services/login'
-import LoginForm from './components/LoginForm'
 
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
@@ -30,10 +30,8 @@ const App = () => {
 
     const match_user = useRouteMatch('/users/:id')
     const match_blog = useRouteMatch('/blogs/:id')
-    console.log('match_blog: ', match_blog)
     const userMatch = match_user ? users.find(user => user.id === match_user.params.id) : null
     const blogMatch = match_blog ? blogs.find(blog => blog.id === match_blog.params.id) : null
-    console.log('blogMatch: ', blogMatch)
 
     const padding = {
         padding: 5,

@@ -15,34 +15,44 @@ const Blog = ({ blog }) => {
         <div>
             <h1>Blogs</h1>
             <br />
-            <div>
-                <h2>{blog.title}</h2>
-                by {blog.author}
-                <br />
-                <br />
-                <a href={`${blog.url}`}>{blog.url}</a>
-                <br />
-                <em>likes: </em>
-                {blog.likes}{' '}
-                <Button variant='success' size='sm' onClick={() => like(blog.id)} className='like'>
-                    like
-                </Button>
-                <br></br>
-                <em>added by: </em>
-                {blog.user.name}
-                <br></br>
-                <Button
-                    variant='danger'
-                    size='sm'
-                    onClick={() => {
-                        if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
-                            removeBlog(blog.id)
-                        }
-                    }}
-                >
-                    remove
-                </Button>
-            </div>
+
+            {blog !== undefined ? (
+                <div>
+                    <h2>{blog.title}</h2>
+                    <p>by {blog.author}</p>
+                    <br />
+                    <br />
+                    <a href={`${blog.url}`}>{blog.url}</a>
+                    <br />
+                    <em>likes: </em>
+                    {blog.likes}{' '}
+                    <Button
+                        variant='success'
+                        size='sm'
+                        onClick={() => like(blog.id)}
+                        className='like'
+                    >
+                        like
+                    </Button>
+                    <br></br>
+                    <em>added by: </em>
+                    {blog.user.name}
+                    <br></br>
+                    <Button
+                        variant='danger'
+                        size='sm'
+                        onClick={() => {
+                            if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
+                                removeBlog(blog.id)
+                            }
+                        }}
+                    >
+                        remove
+                    </Button>
+                </div>
+            ) : (
+                <div>Blog has been deleted.</div>
+            )}
         </div>
     )
 }
