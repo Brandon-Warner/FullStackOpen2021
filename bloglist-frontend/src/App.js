@@ -8,6 +8,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 import Home from './components/Home'
+import Navigation from './components/Navigation'
 import Users from './components/Users'
 import User from './components/User'
 import LoginPage from './components/LoginPage'
@@ -15,9 +16,8 @@ import LoginForm from './components/LoginForm'
 import Blogs from './components/Blogs'
 import Blog from './components/Blog'
 
-import { Switch, Route, Link, useRouteMatch } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 
 const App = () => {
     const [username, setUsername] = useState('')
@@ -35,6 +35,7 @@ const App = () => {
 
     const padding = {
         padding: 5,
+        color: 'white',
     }
 
     useEffect(() => {
@@ -88,37 +89,8 @@ const App = () => {
         )
     }
     return (
-        <div className='container'>
-            <div>
-                <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
-                    <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-                    <Navbar.Collapse id='responseive-navbar-nav'>
-                        <Nav className='mr-auto'>
-                            <Nav.Link href='#' as='span'>
-                                <Link style={padding} to='/'>
-                                    home
-                                </Link>
-                            </Nav.Link>
-                            <Nav.Link href='#' as='span'>
-                                <Link style={padding} to='/users'>
-                                    users
-                                </Link>
-                            </Nav.Link>
-                            <Nav.Link href='#' as='span'>
-                                <Link style={padding} to='/blogs'>
-                                    blogs
-                                </Link>
-                            </Nav.Link>
-                            <Nav.Link href='#' as='span'>
-                                {user.name} is logged in{' '}
-                                <Button variant='secondary' onClick={handleLogout} size='sm'>
-                                    Logout
-                                </Button>
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            </div>
+        <Container>
+            <Navigation padding={padding} handleLogout={handleLogout} user={user} />
             <Switch>
                 <Route path='/users/:id'>
                     <User user={userMatch} />
@@ -139,7 +111,7 @@ const App = () => {
                     <Home user={user} blogs={blogs} handleLogout={handleLogout} />
                 </Route>
             </Switch>
-        </div>
+        </Container>
     )
 }
 

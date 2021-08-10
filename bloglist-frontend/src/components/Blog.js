@@ -89,7 +89,12 @@ const Blog = ({ blog }) => {
                                         placeholder='new comment'
                                         className='comment-input'
                                     />
-                                    <Button variant='outline-info' size='sm' type='submit'>
+                                    <Button
+                                        variant='outline-info'
+                                        size='sm'
+                                        type='submit'
+                                        style={{ margin: 3 }}
+                                    >
                                         add
                                     </Button>
                                 </Form.Group>
