@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable indent */
 import blogService from '../services/blogs'
 
@@ -31,6 +32,16 @@ export const likeBlog = blogId => {
     }
 }
 
+export const addComment = blog => {
+    return async dispatch => {
+        const newBlog = await blogService.postComment(blog)
+        dispatch({
+            type: 'COMMENT_BLOG',
+            data: newBlog,
+        })
+    }
+}
+
 export const deleteBlog = blogId => {
     return async dispatch => {
         await blogService.removeBlog(blogId)
@@ -51,6 +62,9 @@ const blogReducer = (state = [], action) => {
             // eslint-disable-next-line no-case-declarations
             const index = state.findIndex(b => b.id === action.data.id)
             return [...state.slice(0, index), action.data, ...state.slice(index + 1)]
+        case 'COMMENT_BLOG':
+            const commentIndex = state.findIndex(b => b.id === action.data.id)
+            return [...state.slice(0, commentIndex), action.data, ...state.slice(commentIndex + 1)]
         case 'DELETE_BLOG':
             console.log('ACTION.DATA: ', action.data)
             return [...state.filter(b => b.id !== action.data)]
