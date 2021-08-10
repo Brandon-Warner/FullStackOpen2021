@@ -2,7 +2,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { likeBlog, deleteBlog } from '../reducers/blogReducer'
-import { Button } from 'react-bootstrap'
+import { Button, ListGroup } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
     const dispatch = useDispatch()
@@ -35,6 +35,7 @@ const Blog = ({ blog }) => {
                         like
                     </Button>
                     <br></br>
+                    <br></br>
                     <em>added by: </em>
                     {blog.user.name}
                     <br></br>
@@ -49,6 +50,14 @@ const Blog = ({ blog }) => {
                     >
                         remove
                     </Button>
+                    <br />
+                    <br />
+                    <h3>Comments</h3>
+                    <ListGroup variant='flush'>
+                        {blog.comments.map(comment => (
+                            <ListGroup.Item key={comment}>{comment}</ListGroup.Item>
+                        ))}
+                    </ListGroup>
                 </div>
             ) : (
                 <div>Blog has been deleted.</div>

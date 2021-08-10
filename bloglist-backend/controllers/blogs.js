@@ -1,5 +1,6 @@
 // contain all of the routes
 const blogsRouter = require('express').Router()
+const { update } = require('../models/blog')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const middleware = require('../utils/middleware')
@@ -24,6 +25,7 @@ blogsRouter.post(
             likes: body.likes || 0,
             id: body.id,
             user: user.id,
+            comments: body.comments,
         })
         const savedBlog = await blog.save()
 
@@ -36,13 +38,13 @@ blogsRouter.post(
 
 blogsRouter.put('/:id', async (request, response) => {
     const body = request.body
-    console.log('BODY REQUEST: ', body)
     const blog = {
         title: body.title,
         author: body.author,
         url: body.url,
         likes: body.likes || 0,
         id: body.id,
+        comments: body.comments,
     }
 
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
@@ -50,6 +52,24 @@ blogsRouter.put('/:id', async (request, response) => {
     })
     console.log('UPDATE BLOG: ', updatedBlog)
     response.json(updatedBlog)
+})
+
+blogsRouter.post('/:id/comments', async (request, response) => {
+    const body = request.body
+    console.log('BODY: ', body)
+    const blog = {
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes || 0,
+        id: body.id,
+        comments: body.comments,
+    }
+    const updatedBlog = await Blog.findByIdAndUpdate(blog.id, blog, {
+        new: body.comments,
+    })
+    console.log('UPDATED BLOG', updatedBlog)
+    response.json(updatedBlog.toJSON())
 })
 
 blogsRouter.delete(
