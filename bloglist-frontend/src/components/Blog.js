@@ -1,13 +1,16 @@
 /* eslint-disable indent */
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { likeBlog, deleteBlog, addComment } from '../reducers/blogReducer'
+import useField from '../hooks/hooks'
+
 import { Button, Form, ListGroup } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
-    console.log('BLOG PROP ON BLOG.JS', blog)
-    const [comment, setComment] = useState('')
+    const comment = useField('text')
+
     const dispatch = useDispatch()
+
     const like = blogId => {
         dispatch(likeBlog(blogId))
     }
@@ -15,13 +18,12 @@ const Blog = ({ blog }) => {
 
     const newComment = event => {
         event.preventDefault()
-        console.log('COMMENT: ', comment)
         const updatedBlog = {
             ...blog,
-            comments: [...blog.comments, comment],
+            comments: [...blog.comments, comment.effect.value],
         }
         dispatch(addComment(updatedBlog))
-        setComment('')
+        comment.reset()
     }
 
     return (
@@ -83,14 +85,9 @@ const Blog = ({ blog }) => {
                                 <Form.Group className='comments'>
                                     <Form.Label>add comment:</Form.Label>
                                     <Form.Control
-                                        type='text'
-                                        value={comment}
+                                        {...comment.effect}
                                         placeholder='new comment'
                                         className='comment-input'
-                                        onChange={({ target }) => {
-                                            console.log('comment: ', target.value)
-                                            setComment(target.value)
-                                        }}
                                     />
                                     <Button variant='outline-info' size='sm' type='submit'>
                                         add
