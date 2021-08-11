@@ -16,7 +16,6 @@ blogsRouter.post(
     middleware.userVerification,
     async (request, response) => {
         const body = request.body
-        console.log('request body: ', body)
         const user = await User.findById(request.user.id)
         const blog = new Blog({
             title: body.title,
@@ -50,13 +49,11 @@ blogsRouter.put('/:id', async (request, response) => {
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
         new: blog.likes,
     })
-    console.log('UPDATE BLOG: ', updatedBlog)
     response.json(updatedBlog)
 })
 
 blogsRouter.post('/:id/comments', async (request, response) => {
     const body = request.body
-    console.log('BODY: ', body)
     const blog = {
         title: body.title,
         author: body.author,
@@ -68,7 +65,6 @@ blogsRouter.post('/:id/comments', async (request, response) => {
     const updatedBlog = await Blog.findByIdAndUpdate(blog.id, blog, {
         new: body.comments,
     })
-    console.log('UPDATED BLOG', updatedBlog)
     response.json(updatedBlog.toJSON())
 })
 
