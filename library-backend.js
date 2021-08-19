@@ -146,7 +146,8 @@ const resolvers = {
             const book = { ...args, id: uuid() }
             books = [...books, book]
             if (!authors[args.author]) {
-                authors = [...authors, {name: args.author}]
+                const newAuthor = { name: args.author }
+                authors = [...authors, newAuthor]
             }
             return book
         }
