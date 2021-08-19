@@ -107,7 +107,6 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        addAuthor(name: String!, born: String): Author
         addBook(title: String!, author: String!, published: Int!, genres: [String!]): Book
     }
 `
@@ -136,12 +135,6 @@ const resolvers = {
         }
     },
     Mutation: {
-        addAuthor: (root, args) => {
-            const author = { ...args }
-            authors = [...authors, author]
-
-            return author
-        },
         addBook: (root, args) => {
             const book = { ...args, id: uuid() }
             books = [...books, book]
@@ -150,7 +143,8 @@ const resolvers = {
                 authors = [...authors, newAuthor]
             }
             return book
-        }
+        },
+        editAuthor: 
     }
 }
 
