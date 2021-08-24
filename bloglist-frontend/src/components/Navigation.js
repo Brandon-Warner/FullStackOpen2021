@@ -4,7 +4,7 @@ import { Navbar, Nav, Button } from 'react-bootstrap'
 
 const Navigation = ({ padding, handleLogout, user }) => {
     return (
-        <div>
+        <div style={{ margin: '0' }}>
             <Navbar
                 collapseOnSelect
                 expand='lg'
