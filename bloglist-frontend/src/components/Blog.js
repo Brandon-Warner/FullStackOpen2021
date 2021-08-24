@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog, deleteBlog, addComment } from '../reducers/blogReducer'
 import useField from '../hooks/hooks'
 
@@ -8,6 +8,7 @@ import { Button, Form, ListGroup } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
     const comment = useField('text')
+    const users = useSelector(state => state.users)
 
     const dispatch = useDispatch()
 
@@ -41,7 +42,9 @@ const Blog = ({ blog }) => {
                         <div style={{ margin: '10px 0' }}>
                             <p>
                                 <em>added by: </em>
-                                {blog.user.name}
+                                {blog.user.name === undefined
+                                    ? users.filter(u => u.id === blog.user).map(u => u.name)
+                                    : blog.user.name}
                             </p>
                         </div>
                         <div style={{ margin: '5px 0' }}>
