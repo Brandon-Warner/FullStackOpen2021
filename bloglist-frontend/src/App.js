@@ -96,7 +96,7 @@ const App = () => {
                     <User user={userMatch} />
                 </Route>
                 <Route path='/users'>
-                    <Users users={users} user={user} />
+                    <Users users={users} />
                 </Route>
                 <Route path='/blogs/:id'>
                     <Blog blog={blogMatch} />
@@ -108,7 +108,7 @@ const App = () => {
                     <LoginForm />
                 </Route>
                 <Route path='/'>
-                    <Home user={user} blogs={blogs} handleLogout={handleLogout} />
+                    <Home blogs={blogs} handleLogout={handleLogout} />
                 </Route>
             </Switch>
         </Container>

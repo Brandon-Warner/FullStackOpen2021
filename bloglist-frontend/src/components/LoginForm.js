@@ -1,15 +1,14 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-const LoginForm = ({
-    username,
-    setUsername,
-    password,
-    setPassword,
-    handleLogin,
-}) => {
+const loginStyle = {
+    maxWidth: '600px',
+    margin: '0 auto'
+}
+
+const LoginForm = ({ username, setUsername, password, setPassword, handleLogin }) => {
     return (
-        <div>
+        <div style={loginStyle}>
             <Form onSubmit={handleLogin}>
                 <Form.Group>
                     <Form.Label>username</Form.Label>
@@ -33,6 +32,7 @@ const LoginForm = ({
                         variant='primary'
                         type='submit'
                         className='login-button'
+                        style={{ margin: '5px 0 0 0' }}
                     >
                         login
                     </Button>

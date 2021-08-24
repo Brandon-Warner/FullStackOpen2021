@@ -3,10 +3,9 @@ import { ListGroup } from 'react-bootstrap'
 
 const User = ({ user }) => {
     return (
-        <div>
-            <h2>{user.name}</h2>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{ margin: '5px 0' }}>{user.name}&apos;s Blogs</h2>
             <br />
-            <h3>added blogs</h3>
             <ListGroup>
                 {user.blogs.map(blog => (
                     <ListGroup.Item key={blog.id}>{blog.title}</ListGroup.Item>

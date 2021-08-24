@@ -7,8 +7,8 @@ import { Table } from 'react-bootstrap'
 
 const Blogs = ({ blogs }) => {
     return (
-        <div className='container'>
-            <h1>Blogs</h1>
+        <div style={{ maxWidth: '800px' }} className='container'>
+            <h1 style={{ margin: '5px 0' }}>Blogs</h1>
             <br />
             <Toggleable buttonLabel='New Blog'>
                 <BlogForm />

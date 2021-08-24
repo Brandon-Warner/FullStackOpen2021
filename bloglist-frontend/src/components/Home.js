@@ -3,28 +3,33 @@ import Notification from './Notification'
 
 import { Card } from 'react-bootstrap'
 
-const Home = ({ user }) => {
+const cardStyle = {
+    margin: '0 auto',
+    maxWidth: '800px'
+}
+
+const Home = () => {
     return (
         <div>
             <div>
-                <Notification />
+                <Notification style={{ margin: '0 auto' }} />
             </div>
             <div className='container'>
                 <br />
-                <div>
-                    <p>
-                        <em>{user.name} is logged in</em>
-                    </p>
-                </div>
-                <div>
-                    <Card body>
-                        <p>Welcome to the BlogsList application.</p>
-                        <p>Save blogs that you have not read or for personal use later on.</p>
+                <div style={{ margin: '0 auto' }}>
+                    <Card body style={cardStyle}>
+                        <p><strong>Welcome to the Bloglist application.</strong></p>
+                        <p>Keep track of your favorite blogs!</p>
+                        <p>See what other users are reading!</p>
                     </Card>
-                    <Card body>
+                    <Card body style={cardStyle}>
+                        <br />
                         <p>
-                            To view blogs by user: select <em>Users</em>. To see the full list of
-                            currently saved Blogs: select <em>Blogs</em>.
+                            To view blogs by user: select <em>Users</em>.
+                        </p>
+                        <br />
+                        <p>
+                            To see the full list of currently saved Blogs: select <em>Blogs</em>.
                         </p>
                     </Card>
                 </div>

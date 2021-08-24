@@ -4,8 +4,8 @@ import LoginForm from './LoginForm'
 
 const LoginPage = ({ username, password, setUsername, setPassword, handleLogin }) => {
     return (
-        <div className='container'>
-            <h2>Please Log In</h2>
+        <div style={{ padding: '1em' }} className='container'>
+            <h2 style={{ margin: '0 auto', textAlign: 'center' }}>Please log in</h2>
             <Notification />
             <LoginForm
                 username={username}

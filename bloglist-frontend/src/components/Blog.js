@@ -20,63 +20,63 @@ const Blog = ({ blog }) => {
         event.preventDefault()
         const updatedBlog = {
             ...blog,
-            comments: [...blog.comments, comment.effect.value],
+            comments: [...blog.comments, comment.effect.value]
         }
         dispatch(addComment(updatedBlog))
         comment.reset()
     }
 
     return (
-        <div className='container'>
-            <h1>Blogs</h1>
-            <br />
-
+        <div style={{ maxWidth: '800px' }} className='container'>
             {blog !== undefined ? (
                 <div>
-                    <div>
+                    <div style={{ margin: '5px 0' }}>
                         <h2>{blog.title}</h2>
                         <p>by {blog.author}</p>
-                        <br />
                     </div>
                     <div>
                         <a href={`${blog.url}`}>{blog.url}</a>
-                        <br />
                     </div>
-                    <div>
-                        <em>likes: </em>
-                        {blog.likes}{' '}
-                        <Button
-                            variant='success'
-                            size='sm'
-                            onClick={() => like(blog.id)}
-                            className='like'
-                        >
-                            like
-                        </Button>
-                    </div>
-                    <br></br>
-                    <br></br>
-                    <div>
-                        <em>added by: </em>
-                        {blog.user.name}
-                        <br></br>
-                    </div>
-                    <div>
-                        <Button
-                            variant='danger'
-                            size='sm'
-                            onClick={() => {
-                                if (
-                                    window.confirm(`Are you sure you want to delete ${blog.title}?`)
-                                ) {
-                                    removeBlog(blog.id)
-                                }
-                            }}
-                        >
-                            remove
-                        </Button>
-                        <br />
-                        <br />
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr' }}>
+                        <div style={{ margin: '10px 0' }}>
+                            <p>
+                                <em>added by: </em>
+                                {blog.user.name}
+                            </p>
+                        </div>
+                        <div style={{ margin: '5px 0' }}>
+                            <em>likes: </em>
+                            {blog.likes}{' '}
+                            <Button
+                                variant='success'
+                                size='sm'
+                                onClick={() => like(blog.id)}
+                                className='like'
+                                style={{ margin: '5px 0' }}
+                            >
+                                like
+                            </Button>
+                        </div>
+
+                        <div style={{ margin: '8px 0' }}>
+                            <Button
+                                variant='danger'
+                                size='sm'
+                                onClick={() => {
+                                    if (
+                                        window.confirm(
+                                            `Are you sure you want to delete ${blog.title}?`
+                                        )
+                                    ) {
+                                        removeBlog(blog.id)
+                                    }
+                                }}
+                            >
+                                remove
+                            </Button>
+                            <br />
+                            <br />
+                        </div>
                     </div>
                     <div>
                         <h3>Comments</h3>
@@ -93,7 +93,7 @@ const Blog = ({ blog }) => {
                                         variant='outline-info'
                                         size='sm'
                                         type='submit'
-                                        style={{ margin: 3 }}
+                                        style={{ margin: '5px 0' }}
                                     >
                                         add
                                     </Button>

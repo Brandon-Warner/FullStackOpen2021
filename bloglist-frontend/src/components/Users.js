@@ -2,16 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 
-const Users = ({ users, user }) => {
+const Users = ({ users }) => {
     return (
-        <div className='container'>
-            <h1>Blogs</h1>
+        <div style={{ maxWidth: '800px' }} className='container'>
+            <h2 style={{ margin: '5px 0' }}>Users</h2>
             <br />
-            {user.name} is logged in
-            <br />
-            <h2>Users</h2>
-            <br />
-            <Table striped bordered hover size='sm'>
+            <Table striped bordered hover size='sm'  style={{ textAlign: 'center' }}>
                 <thead>
                     <tr>
                         <td>
