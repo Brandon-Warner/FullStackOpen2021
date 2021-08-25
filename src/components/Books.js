@@ -3,12 +3,13 @@ import React from 'react'
 
 import { ALL_BOOKS } from '../queries'
 
-const Books = () => {
+const Books = props => {
+    console.log(props)
     const result = useQuery(ALL_BOOKS)
     console.log('books result: ', result)
 
-    if (result.loading) {
-      return <div>loading ...</div>
+    if (!props.show) {
+        return null
     }
 
     const books = result.data.allBooks
