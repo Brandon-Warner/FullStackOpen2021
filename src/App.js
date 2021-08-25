@@ -13,11 +13,11 @@ const App = () => {
                 <button onClick={() => setPage('books')}>books</button>
                 <button onClick={() => setPage('add')}>add book</button>
             </div>
-            <Authors show={page === 'authors'} />
+            {page === 'authors' ? <Authors /> : null}
 
-            <Books show={page === 'books'} />
+            {page === 'books' ? <Books /> : null}
 
-            <NewBook show={page === 'add'} />
+            {page === 'add' ? <NewBook show={'add'} /> : null}
         </div>
     )
 }
