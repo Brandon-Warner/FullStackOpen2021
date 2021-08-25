@@ -21,18 +21,21 @@ export const ALL_BOOKS = gql`
 `
 
 export const NEW_BOOK = gql`
-    mutation newBook($title: String!, $author: String!, $published: Int!, $genres: [String!]){
-        addBook(
-            title: $title
-            author: $author
-            published: $published
-            genres: $genres
-            )
-        {
+    mutation newBook($title: String!, $author: String!, $published: Int!, $genres: [String!]) {
+        addBook(title: $title, author: $author, published: $published, genres: $genres) {
             title
-            author 
+            author
             published
             genres
+        }
+    }
+`
+
+export const ADD_BORN = gql`
+    mutation addBorn($name: String!, $born: Int!) {
+        editAuthor(name: $name, setBornTo: $born) {
+            name
+            born
         }
     }
 `

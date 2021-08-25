@@ -1,37 +1,63 @@
-import React from 'react'
-import { useQuery } from '@apollo/client'
+import React, { useState } from 'react'
+import { useMutation, useQuery } from '@apollo/client'
 
-import { ALL_AUTHORS } from '../queries'
+import { ALL_AUTHORS, ADD_BORN } from '../queries'
 
 const Authors = props => {
+    const [name, setName] = useState('')
+    const [born, setBorn] = useState('')
     const result = useQuery(ALL_AUTHORS)
     console.log('result: ', result)
+    const [addBorn] = useMutation(ADD_BORN, {
+        refetchQueries: [{ query: ALL_AUTHORS }]
+    })
 
     if (!props.show) {
         return null
     }
 
+    const submit = async event => {
+        event.preventDefault()
+
+        addBorn({ variables: { name, born } })
+
+        setName('')
+        setBorn('')
+    }
+
     let authors = result.data.allAuthors
-    
+
     return (
         <div>
-            <h2>authors</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <th></th>
-                        <th>born</th>
-                        <th>books</th>
-                    </tr>
-                    {authors.map(a => (
-                        <tr key={a.name}>
-                            <td>{a.name}</td>
-                            <td>{a.born}</td>
-                            <td>{a.bookCount}</td>
+            <div>
+                <h2>authors</h2>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>born</th>
+                            <th>books</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                        {authors.map(a => (
+                            <tr key={a.name}>
+                                <td>{a.name}</td>
+                                <td>{a.born}</td>
+                                <td>{a.bookCount}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h3>Set Birth Year</h3>
+                <form onSubmit={submit}>
+                    name
+                    <input value={name} onChange={({ target }) => setName(target.value)} /> <br />
+                    born
+                    <input value={born} onChange={({ target }) => setBorn(Number(target.value))} />
+                    <button type='submit'>add</button>
+                </form>
+            </div>
         </div>
     )
 }
