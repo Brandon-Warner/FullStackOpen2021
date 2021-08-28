@@ -1,0 +1,11 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJyYW5kb24iLCJpZCI6IjYwYWMwNzY3NGI1YjhhNTg1NmViN2E4NiIsImlhdCI6MTYyMTg5NDkwN30.Yrb7Vt_tb5keoqQgVzBZm4JSZSFNAwafrMB-HFYfsSU
+
+{ 
+    "title": "Worst Movies of 2020",
+    "author": "Sullivan", 
+    "url": "www.youdontwantthis.com", 
+    "likes": "2",
+    "user": ""
+}
