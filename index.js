@@ -1,4 +1,4 @@
-const { ApolloServer, gql, UserInputError } = require('apollo-server')
+const { ApolloServer, gql, UserInputError, AuthenticationError } = require('apollo-server')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
@@ -105,9 +105,16 @@ const resolvers = {
         }
     },
     Mutation: {
-        addBook: async (root, args) => {
+        addBook: async (root, args, context) => {
+            const user = context.currentUser
             const foundBook = await Book.findOne({ title: args.title })
             const foundAuthor = await Author.findOne({ name: args.author.name })
+
+            if (!user) {
+                throw new AuthenticationError('cannot add book until signed in', {
+                    invalidArgs: args
+                })
+            }
 
             if (foundBook) {
                 throw new UserInputError('Book already exists', {
@@ -139,8 +146,16 @@ const resolvers = {
 
             return book
         },
-        editAuthor: async (root, args) => {
+        editAuthor: async (root, args, context) => {
+            const user = context.currentUser
             let author = await Author.findOne({ name: args.name })
+
+            if (!user) {
+                throw new AuthenticationError('cannot edit authors until signed in', {
+                    invalidArgs: args
+                })
+            }
+
             if (!author) {
                 throw new UserInputError('Author does not exist', {
                     invalidArgs: args
