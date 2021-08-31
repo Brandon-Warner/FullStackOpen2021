@@ -80,11 +80,10 @@ const resolvers = {
         allAuthors: () => Author.find({})
     },
     Author: {
-        bookCount: root => {
-            let count = 0
-            authorBooks = books.filter(b => b.author === root.name)
-            count = authorBooks.length
-            return count
+        bookCount: async root => {
+            const author = await Author.findOne({ name: root.name })
+            const books = await Books.findOne({ author: author.id })
+            return books.length
         }
     },
     Mutation: {
@@ -144,7 +143,7 @@ const resolvers = {
                     invalidArgs: args
                 })
             }
-            return Author.findOne({ name: args.name })
+            return await Author.findOne({ name: args.name })
         }
     }
 }
