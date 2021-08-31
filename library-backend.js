@@ -200,16 +200,23 @@ const resolvers = {
 
             return book
         },
-        editAuthor: (root, args) => {
-            const author = authors.find(a => a.name === args.name)
+        editAuthor: async (root, args) => {
+            const author = await Author.findOne({ name: args.name })
             if (!author) {
-                return null
+                throw new UserInputError('Author does not exist', {
+                    invalidArgs: args
+                })
             }
 
-            const updatedAuthor = { ...author, born: args.setBornTo }
+            const updatedAuthor = { ...author, born: args.setBornto }
 
-            authors = authors.map(a => (a.name === args.name ? updatedAuthor : a))
-
+            try {
+                await updatedAuthor.save()
+            } catch (error) {
+                throw new UserInputError(error.message, {
+                    invalidArgs: args
+                })
+            }
             return updatedAuthor
         }
     }
