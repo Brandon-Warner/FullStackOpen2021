@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql, UserInputError } = require('apollo-server')
 
 require('dotenv').config()
 
@@ -111,10 +111,16 @@ const typeDefs = gql`
         id: ID!
     }
 
+    input AuthorInput {
+        name: String!
+        born: Int
+    }
+
     type Author {
         name: String!
         born: String
         bookCount: Int!
+        id: ID!
     }
 
     enum YesNo {
@@ -131,7 +137,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        addBook(title: String!, author: String!, published: Int!, genres: [String!]): Book
+        addBook(title: String!, author: AuthorInput!, published: Int!, genres: [String!]): Book
         editAuthor(name: String!, setBornTo: Int!): Author
     }
 `
@@ -160,15 +166,39 @@ const resolvers = {
         }
     },
     Mutation: {
-        addBook: (root, args) => {
-            console.log('args: ', args)
-            const book = new Book({ ...args })
-            if (Author.findOne({ name: args.author })) {
-                return book.save()
-            } else {
-                const author = new Author({ name: args.author })
-                author.save()
+        addBook: async (root, args) => {
+            const foundBook = await Book.findOne({ title: args.title })
+            const foundAuthor = await Author.findOne({ name: args.author.name })
+
+            if (foundBook) {
+                throw new UserInputError('Book already exists', {
+                    invalidArgs: args
+                })
             }
+
+            if (!foundAuthor) {
+                const author = new Author({ ...args.author })
+                try {
+                    await author.save()
+                } catch (error) {
+                    throw new UserInputError(error.message, {
+                        invalidArgs: args
+                    })
+                }
+            }
+
+            const foundAuthor2 = await Author.findOne({ name: args.author.name })
+            const book = new Book({ ...args, author: foundAuthor2 })
+
+            try {
+                await book.save()
+            } catch (error) {
+                throw new UserInputError(error.message, {
+                    invalidArgs: args
+                })
+            }
+
+            return book
         },
         editAuthor: (root, args) => {
             const author = authors.find(a => a.name === args.name)
