@@ -42,7 +42,7 @@ const typeDefs = gql`
 
     type Author {
         name: String!
-        born: String
+        born: Int
         bookCount: Int!
         id: ID!
     }
@@ -107,7 +107,7 @@ const resolvers = {
     Author: {
         bookCount: async root => {
             const author = await Author.findOne({ name: root.name })
-            const books = await Books.findOne({ author: author.id })
+            const books = await Book.find({ author: author.id })
             return books.length
         }
     },
