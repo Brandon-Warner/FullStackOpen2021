@@ -57,16 +57,11 @@ const typeDefs = gql`
         value: String!
     }
 
-    enum YesNo {
-        YES
-        NO
-    }
-
     type Query {
         bookCount: Int!
         authorCount: Int!
 
-        allBooks(author: YesNo, genre: YesNo): [Book!]!
+        allBooks(author: String, genre: String): [Book!]!
         allAuthors: [Author!]!
         me: User
     }
@@ -83,14 +78,26 @@ const resolvers = {
     Query: {
         bookCount: () => Book.collection.countDocuments(),
         authorCount: () => Author.collection.countDocuments(),
-        allBooks: (root, args) => {
-            if (!args.author && !args.genre) {
-                return books
-            } else if (args.author === 'YES') {
-                return books.filter(b => b.author === args.author)
-            } else if (args.genre === 'YES') {
-                return books.filter(b => b.genres.includes(args.genre))
+        allBooks: async (root, args) => {
+            if (args.author) {
+                const author = await Author.findOne({ name: args.author })
+                if (author) {
+                    if (args.genre) {
+                        return await Book.find({
+                            author: author.id,
+                            genres: { $in: [args.genre] }
+                        }).populate('author')
+                    }
+                    return await Book.find({ author: author.id }).populate('author')
+                }
+                return null
             }
+
+            if (args.genre) {
+                return Book.find({ genres: { $in: [args.genre] } }).populate('author')
+            }
+
+            return Book.find({}).populate('author')
         },
         allAuthors: () => Author.find({}),
         me: (root, args, context) => {
