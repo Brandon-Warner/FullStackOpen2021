@@ -9,7 +9,7 @@ const Authors = props => {
     const [born, setBorn] = useState('')
 
     const result = useQuery(ALL_AUTHORS)
-    console.log('result: ', result)
+    console.log('authors result: ', result)
 
     const [addBorn] = useMutation(ADD_BORN, {
         refetchQueries: [{ query: ALL_AUTHORS }]
