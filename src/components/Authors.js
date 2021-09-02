@@ -4,7 +4,7 @@ import { useMutation, useQuery } from '@apollo/client'
 
 import { ALL_AUTHORS, ADD_BORN } from '../queries'
 
-const Authors = props => {
+const Authors = ({ authors, show }) => {
     const [name, setName] = useState(null)
     const [born, setBorn] = useState('')
 
@@ -15,10 +15,6 @@ const Authors = props => {
         refetchQueries: [{ query: ALL_AUTHORS }]
     })
 
-    if (!props.show) {
-        return null
-    }
-
     const submit = async event => {
         event.preventDefault()
 
@@ -27,8 +23,11 @@ const Authors = props => {
         setName(null)
         setBorn('')
     }
+    if (!show) {
+        return null
+    }
 
-    const authors = result.data.allAuthors
+    // const authors = result.data.allAuthors
 
     const options = authors.map(a => {
         return { value: a.name, label: a.name }
