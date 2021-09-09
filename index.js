@@ -9,6 +9,7 @@ const User = require('./models/User')
 
 const MONGODB_URI = process.env.MONGODB_URI
 const JWT_SECRET = process.env.JWT_SECRET
+const PASSWORD = process.env.PASSWORD
 
 console.log('connecting to ', MONGODB_URI)
 
@@ -67,7 +68,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        addBook(title: String!, author: AuthorInput!, published: Int!, genres: [String!]): Book
+        addBook(title: String!, author: String!, published: Int!, genres: [String!]): Book
         editAuthor(name: String!, setBornTo: Int!): Author
         createUser(username: String!, favoriteGenre: String!): User
         login(username: String!, password: String!): Token
@@ -113,14 +114,12 @@ const resolvers = {
     },
     Mutation: {
         addBook: async (root, args, context) => {
-            const user = context.currentUser
             const foundBook = await Book.findOne({ title: args.title })
-            const foundAuthor = await Author.findOne({ name: args.author.name })
+            const foundAuthor = await Author.findOne({ name: args.author })
+            const user = context.currentUser
 
             if (!user) {
-                throw new AuthenticationError('cannot add book until signed in', {
-                    invalidArgs: args
-                })
+                throw new AuthenticationError('cannot add book until signed in')
             }
 
             if (foundBook) {
@@ -130,17 +129,17 @@ const resolvers = {
             }
 
             if (!foundAuthor) {
-                const author = new Author({ ...args.author })
+                const author = new Author({ ...args, name: args.author })
                 try {
                     await author.save()
                 } catch (error) {
-                    throw new UserInputError(error.message, {
+                    throw new UserInputError('error with author input', error.message, {
                         invalidArgs: args
                     })
                 }
             }
 
-            const foundAuthor2 = await Author.findOne({ name: args.author.name })
+            const foundAuthor2 = await Author.findOne({ name: args.author })
             const book = new Book({ ...args, author: foundAuthor2 })
 
             try {
@@ -195,9 +194,9 @@ const resolvers = {
             })
         },
         login: async (root, args) => {
-            const user = await User.find({ username: args.username })
+            const user = await User.findOne({ username: args.username })
 
-            if (!user || args.password !== 'password') {
+            if (!user || args.password !== PASSWORD) {
                 throw new UserInputError('username or password is incorrect')
             }
 
