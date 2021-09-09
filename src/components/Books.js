@@ -4,9 +4,9 @@ import React from 'react'
 import { ALL_BOOKS } from '../queries'
 
 const Books = props => {
-    console.log(props)
+    // console.log(props)
     const result = useQuery(ALL_BOOKS)
-    console.log('books result: ', result)
+    // console.log('books result: ', result)
 
     if (!props.show) {
         return null

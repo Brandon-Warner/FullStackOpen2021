@@ -14,7 +14,7 @@ const App = () => {
     const [page, setPage] = useState('authors')
 
     const result = useQuery(ALL_AUTHORS)
-    console.log('authors result: ', result)
+    // console.log('authors result: ', result)
 
     if (result.loading) {
         return <div>loading...</div>
