@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 
 import { ALL_AUTHORS, ADD_BORN } from '../queries'
 
@@ -8,8 +8,6 @@ const Authors = ({ authors, show }) => {
     const [name, setName] = useState(null)
     const [born, setBorn] = useState('')
 
-    const result = useQuery(ALL_AUTHORS)
-    console.log('authors result: ', result)
 
     const [addBorn] = useMutation(ADD_BORN, {
         refetchQueries: [{ query: ALL_AUTHORS }]
@@ -32,7 +30,6 @@ const Authors = ({ authors, show }) => {
     const options = authors.map(a => {
         return { value: a.name, label: a.name }
     })
-    console.log(options)
 
     return (
         <div>
