@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useApolloClient, useQuery } from '@apollo/client'
 
-import { ALL_AUTHORS } from './queries'
+import { ALL_AUTHORS, ME } from './queries'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
@@ -15,10 +15,13 @@ const App = () => {
     const [page, setPage] = useState('authors')
 
     const result = useQuery(ALL_AUTHORS)
+    const userResult = useQuery(ME)
 
     if (result.loading) {
         return <div>loading...</div>
     }
+
+    const user = userResult.data.me
 
     const logout = () => {
         setToken(null)
@@ -47,7 +50,7 @@ const App = () => {
 
             <Authors authors={result.data.allAuthors} show={page === 'authors'} />
 
-            <Recommend show={page === 'recommend'} />
+            <Recommend user={user} show={page === 'recommend'} />
 
             <Books show={page === 'books'} />
 

@@ -59,3 +59,15 @@ export const ME = gql`
         }
     }
 `
+
+export const FAV_GENRE_BOOK = gql`
+    query favGenreBook($genre: String) {
+        allBooks(genre: $genre) {
+            title
+            author {
+                name
+            }
+            published
+        }
+    }
+`

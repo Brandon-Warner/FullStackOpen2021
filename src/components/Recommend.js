@@ -1,20 +1,17 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { ALL_BOOKS, ME } from '../queries'
+import { FAV_GENRE_BOOK } from '../queries'
 
-const Recommend = ({ show }) => {
-    const result = useQuery(ME)
-    const booksResult = useQuery(ALL_BOOKS)
+const Recommend = ({ show, user }) => {
+    const booksResult = useQuery(FAV_GENRE_BOOK, {
+        variables: { genre: user === null ? 'thriller' : user.favoriteGenre }
+    })
 
     if (!show) {
         return null
     }
 
-    const user = result.data.me
     const books = booksResult.data.allBooks
-    const booksToShow = books.filter(b => b.genres.includes(user.favoriteGenre))
-    console.log('user: ', user)
-    console.log('books: ', books)
 
     return (
         <div>
@@ -29,7 +26,7 @@ const Recommend = ({ show }) => {
                         <th>author</th>
                         <th>published</th>
                     </tr>
-                    {booksToShow.map(a => (
+                    {books.map(a => (
                         <tr key={a.title}>
                             <td>{a.title}</td>
                             <td>{a.author.name}</td>
