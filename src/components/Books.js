@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 import { FAV_GENRE_BOOK } from '../queries'
 
 const Books = ({ genres, show, books }) => {
-    console.log('Books books: ', books)
     const [booksToShow, setBooksToShow] = useState(books)
 
     const [getBooks, result] = useLazyQuery(FAV_GENRE_BOOK)
@@ -23,8 +22,7 @@ const Books = ({ genres, show, books }) => {
     if (!show) {
         return null
     }
-    console.log('books result: ', result)
-    console.log('booksToShow: ', booksToShow)
+
     return (
         <div>
             <h2>books</h2>
