@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useApolloClient, useQuery } from '@apollo/client'
 
-import { ALL_AUTHORS, ME } from './queries'
+import { ALL_AUTHORS, ALL_BOOKS, ME } from './queries'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
@@ -11,17 +11,32 @@ import Recommend from './components/Recommend'
 
 const App = () => {
     const client = useApolloClient()
+
     const [token, setToken] = useState(null)
     const [page, setPage] = useState('authors')
-
+    let allGenres = []
     const result = useQuery(ALL_AUTHORS)
     const userResult = useQuery(ME)
+    const bookResult = useQuery(ALL_BOOKS)
 
     if (result.loading) {
         return <div>loading...</div>
     }
 
     const user = userResult.data.me
+    const books = bookResult.data.allBooks
+
+    const getGenres = books => {
+        books.forEach(book => {
+            book.genres.forEach(genre => {
+                allGenres.push(genre)
+            })
+        })
+        return allGenres
+    }
+    getGenres(books)
+
+    const uniqueGenres = [...new Set(allGenres)]
 
     const logout = () => {
         setToken(null)
@@ -52,7 +67,7 @@ const App = () => {
 
             <Recommend user={user} show={page === 'recommend'} />
 
-            <Books show={page === 'books'} />
+            <Books genres={uniqueGenres} books={books} show={page === 'books'} />
 
             <NewBook show={page === 'add'} />
         </div>
