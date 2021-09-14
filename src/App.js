@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useApolloClient, useQuery, useSubscription } from '@apollo/client'
 
-import { ALL_AUTHORS, ALL_BOOKS, ME } from './queries'
+import { ALL_AUTHORS, ALL_BOOKS, ME, BOOK_ADDED } from './queries'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
@@ -18,6 +18,12 @@ const App = () => {
     const result = useQuery(ALL_AUTHORS)
     const userResult = useQuery(ME)
     const bookResult = useQuery(ALL_BOOKS)
+
+    useSubscription(BOOK_ADDED, {
+        onSubscriptionData: ({ subscriptionData }) => {
+            window.alert(`New book added: ${subscriptionData.data.bookAdded.title}`)
+        }
+    })
 
     if (result.loading) {
         return <div>loading...</div>
