@@ -12,7 +12,6 @@ const Books = ({ genres, show, books }) => {
         if (result.data) {
             setBooksToShow(result.data.allBooks)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [result, setBooksToShow])
 
     const setBooks = genre => {

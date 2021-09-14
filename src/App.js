@@ -19,9 +19,27 @@ const App = () => {
     const userResult = useQuery(ME)
     const bookResult = useQuery(ALL_BOOKS)
 
+    const updateCacheWith = addedBook => {
+        const includedIn = (set, object) => set.map(p => p.id).includes(object.id)
+
+        const dataInStore = client.readQuery({ query: ALL_BOOKS })
+        console.log('data in store: ', dataInStore)
+
+        if (!includedIn(dataInStore.allBooks, addedBook)) {
+            client.writeQuery({
+                query: ALL_BOOKS,
+                data: { allBooks: dataInStore.allBooks.concat(addedBook) }
+            })
+        }
+    }
+
     useSubscription(BOOK_ADDED, {
         onSubscriptionData: ({ subscriptionData }) => {
-            window.alert(`New book added: ${subscriptionData.data.bookAdded.title}`)
+            console.log('subscription data: ', subscriptionData)
+            const addedBook = subscriptionData.data.bookAdded
+            console.log('added book: ', addedBook)
+            window.alert(`New book added: ${addedBook.title}`)
+            updateCacheWith(addedBook)
         }
     })
 
@@ -75,7 +93,7 @@ const App = () => {
 
             <Books genres={uniqueGenres} books={books} show={page === 'books'} />
 
-            <NewBook show={page === 'add'} />
+            <NewBook updateCacheWith={updateCacheWith} show={page === 'add'} />
         </div>
     )
 }
