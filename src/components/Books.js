@@ -1,22 +1,50 @@
-import { useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import React, { useState, useEffect } from 'react'
 
-import { FAV_GENRE_BOOK } from '../queries'
+import { ALL_BOOKS } from '../queries'
 
-const Books = ({ genres, show, books }) => {
-    const [booksToShow, setBooksToShow] = useState(books)
+const Books = ({ show }) => {
+    const [books, setBooks] = useState([])
+    const [filteredBooks, setFilteredBooks] = useState([])
+    const [genres, setGenres] = useState([])
+    const [selectedGenre, setSelectedGenre] = useState('')
+    const [uniqueGenres, setUniqueGenres] = useState([])
 
-    const [getBooks, result] = useLazyQuery(FAV_GENRE_BOOK)
+    const result = useQuery(ALL_BOOKS)
 
     useEffect(() => {
         if (result.data) {
-            setBooksToShow(result.data.allBooks)
-        }
-    }, [result, setBooksToShow])
+            const allBooks = result.data.allBooks
+            setBooks(allBooks)
+            let genres = ['ALL']
+            books.forEach(book => {
+                book.genres.forEach(g => {
+                    genres.push(g)
+                })
+            })
+            setGenres(genres)
 
-    const setBooks = genre => {
-        getBooks({ variables: { genre: genre } })
-    }
+            setUniqueGenres([...new Set(genres)])
+        }
+
+        setSelectedGenre('ALL')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [result, books])
+
+    useEffect(() => {
+        if (selectedGenre === 'ALL') {
+            setFilteredBooks(books)
+        } else {
+            setFilteredBooks(books.filter(b => b.genres.includes(selectedGenre)))
+        }
+    }, [books, selectedGenre])
+
+    
+    console.log('books: ', books)
+    console.log('filtered books: ', filteredBooks)
+    console.log('genres: ', genres)
+    console.log('unique genres: ', uniqueGenres)
+    console.log('selected genre: ', selectedGenre)
 
     if (!show) {
         return null
@@ -25,6 +53,8 @@ const Books = ({ genres, show, books }) => {
     return (
         <div>
             <h2>books</h2>
+            <br />
+            {/* <button onClick={() => setBooksFilter()}>refresh</button> */}
 
             <table>
                 <tbody>
@@ -33,7 +63,7 @@ const Books = ({ genres, show, books }) => {
                         <th>author</th>
                         <th>published</th>
                     </tr>
-                    {booksToShow.map(a => (
+                    {filteredBooks.map(a => (
                         <tr key={a.title}>
                             <td>{a.title}</td>
                             <td>{a.author.name}</td>
@@ -43,12 +73,11 @@ const Books = ({ genres, show, books }) => {
                 </tbody>
             </table>
             <div>
-                {genres.map(genre => (
-                    <button key={genre} onClick={() => setBooks(genre)}>
+                {uniqueGenres.map(genre => (
+                    <button key={genre} onClick={() => setSelectedGenre(genre)}>
                         {genre}
                     </button>
                 ))}
-                <button onClick={() => setBooksToShow(books)}>reset filter</button>
             </div>
         </div>
     )

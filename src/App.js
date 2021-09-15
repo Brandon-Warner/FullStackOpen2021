@@ -14,10 +14,8 @@ const App = () => {
 
     const [token, setToken] = useState(null)
     const [page, setPage] = useState('authors')
-    let allGenres = []
     const result = useQuery(ALL_AUTHORS)
     const userResult = useQuery(ME)
-    const bookResult = useQuery(ALL_BOOKS)
 
     const updateCacheWith = addedBook => {
         const includedIn = (set, object) => set.map(p => p.id).includes(object.id)
@@ -48,19 +46,6 @@ const App = () => {
     }
 
     const user = userResult.data.me
-    const books = bookResult.data.allBooks
-
-    const getGenres = books => {
-        books.forEach(book => {
-            book.genres.forEach(genre => {
-                allGenres.push(genre)
-            })
-        })
-        return allGenres
-    }
-    getGenres(books)
-
-    const uniqueGenres = [...new Set(allGenres)]
 
     const logout = () => {
         setToken(null)
@@ -91,7 +76,7 @@ const App = () => {
 
             <Recommend user={user} show={page === 'recommend'} />
 
-            <Books genres={uniqueGenres} books={books} show={page === 'books'} />
+            <Books show={page === 'books'} />
 
             <NewBook updateCacheWith={updateCacheWith} show={page === 'add'} />
         </div>
