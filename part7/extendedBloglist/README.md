@@ -12,3 +12,12 @@ To Do:
 Video of app functionaliy:
 
 https://user-images.githubusercontent.com/75649322/127598515-4b23f820-77e0-4d61-895d-b3ebfc942a36.mov
+
+clone repository on local machine to run
+be sure server is running before launching client
+
+//install dependencies
+#npm install
+
+//run locally
+#npm start
