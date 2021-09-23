@@ -14,4 +14,11 @@ const calculateBmi = (pounds: number, height: number): String => {
         return 'could not calculate BMI with these parameters';
 }
 
-console.log(calculateBmi(161, 70));
+const pounds: number = Number(process.argv[2]);
+const height: number = Number(process.argv[3]);
+
+try{
+    console.log(calculateBmi(pounds, height));
+} catch (e) {
+    console.log('error: ', e);
+}
