@@ -45,11 +45,10 @@ const exerciseCalculator = (
     } else if (average === target) {
         rating = 2;
         ratingDescription = 'way to hit the target, nice job';
-    } else {
+    } else if (average > target){
         rating = 3;
         ratingDescription = 'incredible! way to go above and beyond';
     }
-
 
     return{
         periodLength: periodLength,
@@ -63,8 +62,21 @@ const exerciseCalculator = (
 
 };
 
+const dailyExerciseHours: Array<number> = [];
+const target: number = Number(process.argv[2]);
+
+// VALIDATES CL INPUT WILL ONLY TAKE NUMBERS & ENDS IF INPUT ENDS //
+for (let i = 1; i <= process.argv.length; i++) {
+    let day: number = (Number(process.argv[2 + i]));
+    if (isNaN(day)){
+        break;
+    }
+    dailyExerciseHours.push(day);
+}
+
+
 try{
-    console.log(exerciseCalculator(2, [2, 2, 2.5, 4, 5, 2, 0]));
+    console.log(exerciseCalculator(target, dailyExerciseHours));
 } catch (e) {
     console.log('Error: ', e);
 };
