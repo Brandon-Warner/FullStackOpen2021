@@ -8,8 +8,7 @@ app.get('/hello', (_req, res) => {
 
 app.get('/bmi', async (req, res) => {
 
-    let pounds = req.query.pounds;
-    let height = req.query.height;
+    let { pounds, height } = req.query;
     
     const bmiInfo = calculateBmi(Number(pounds), Number(height));
 
