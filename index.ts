@@ -1,14 +1,14 @@
 import express from 'express';
 const app = express();
-import { calculateBmi } from './bmiCalculator'
+import { calculateBmi } from './bmiCalculator';
 
 app.get('/hello', (_req, res) => {
     res.send('Hello Full Stack!');
 });
 
-app.get('/bmi', async (req, res) => {
+app.get('/bmi', (req, res) => {
 
-    let { pounds, height } = req.query;
+    const { pounds, height } = req.query;
     
     const bmiInfo = calculateBmi(Number(pounds), Number(height));
 
@@ -16,11 +16,11 @@ app.get('/bmi', async (req, res) => {
         weight: pounds,
         height: height, 
         bmiInfo
-    }
+    };
     try{
         res.json(bmiJson);
     } catch (error) {
-        res.status(500).json({error: error.message})
+        res.status(500).json({error: error.message});
     }
 });
 
