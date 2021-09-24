@@ -1,6 +1,6 @@
 // BMI = weight(lbs) / height(in) ^ 2 * 703
 
-const calculateBmi = (pounds: number, height: number): String => {
+export const calculateBmi = (pounds: number, height: number): String => {
     const BMI = (pounds) / Math.pow(height, 2) * 703;
     if (BMI >= 18.5 && BMI < 25)
         return 'Normal (healthy weight)';
