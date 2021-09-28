@@ -14,8 +14,8 @@ export const calculateBmi = (pounds: number, height: number): string => {
         return 'could not calculate BMI with these parameters';
 };
 
-const pounds: number = Number(process.argv[2]);
-const height: number = Number(process.argv[3]);
+const pounds = Number(process.argv[2]);
+const height = Number(process.argv[3]);
 
 try{
     console.log(calculateBmi(pounds, height));

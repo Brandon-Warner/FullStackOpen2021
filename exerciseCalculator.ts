@@ -3,10 +3,13 @@ interface ExerciseValues {
    dailyExerciseHours: Array<number>;
 }
 
-const parseExerciseArguments = (
+export const parseExerciseArguments = (
     target: number,
     dailyExercise: Array<number>
 ): ExerciseValues => {
+    console.log('target: ', target);
+    console.log('dailyExercise: ', dailyExercise);
+    
     if(!isNaN(target) && !dailyExercise.some(isNaN)) {
         return {
             target: target,
@@ -27,7 +30,7 @@ interface AverageValues {
     average: number;
 }
 
-const exerciseCalculator = (
+export const calculateExercise = (
     target: number, 
     dailyExerciseHours: Array<number>
 ): AverageValues => {
@@ -80,7 +83,7 @@ for (let i = 1; i <= process.argv.length; i++) {
 
 
 try{
-    console.log(exerciseCalculator(target, dailyExerciseHours));
+    console.log(calculateExercise(target, dailyExerciseHours));
 } catch (e) {
     console.log('Error: ', e);
 }
