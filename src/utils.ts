@@ -4,7 +4,7 @@ import { Gender, NewPatientEntry } from './types';
 
 const isString = (text: unknown): text is string => {
     return typeof text === 'string' || text instanceof String;
-};
+} ;
 
 const parseName = (name: unknown): string => {
     if(!name || !isString(name)) {
