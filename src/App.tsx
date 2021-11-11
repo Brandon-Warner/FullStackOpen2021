@@ -3,34 +3,9 @@ import Header from './components/Header';
 import Content from './components/Content';
 import Total from './components/Total';
 
+import { CoursePart } from './types';
+
 const App = () => {
-
-  interface CoursePartBase {
-    name: string;
-    exerciseCount: number;
-    type: string;
-  }
-
-  interface CoursePartBaseWithDescription {
-    name: string;
-    exerciseCount: number;
-    type: string;
-    description: string;
-  }
-
-  interface CourseNormalPart extends CoursePartBaseWithDescription {
-    type: "normal";
-  }
-  interface CourseProjectPart extends CoursePartBase {
-    type: "groupProject";
-    groupProjectCount: number;
-  }
-  interface CourseSubmissionPart extends CoursePartBaseWithDescription {
-    type: "submission";
-    exerciseSubmissionLink: string;
-  }
-
-  type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart;
 
   const courseName = "Half Stack App Development";
 
