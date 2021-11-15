@@ -9,12 +9,13 @@ const getPatients = (): Array<Patients> => {
 };
 
 const getNonSensitiveInfoPatients = ():NonSensitiveInfoPatients[] => {
-    return patientData.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+    return patientData.map(({ id, name, dateOfBirth, gender, occupation, entries }) => ({
         id,
         name,
         dateOfBirth,
         gender,
         occupation,
+        entries
     }));
 };
 

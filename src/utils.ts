@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Gender, NewPatientEntry } from './types';
+import { Entry, Gender, NewPatientEntry } from './types';
 
 const isString = (text: unknown): text is string => {
     return typeof text === 'string' || text instanceof String;
@@ -50,15 +50,16 @@ const parseOccupation = (occupation: unknown): string => {
 };
 
 
-type Fields = { name: unknown , dateOfBirth: unknown, gender : unknown, ssn: unknown, occupation: unknown };
+type Fields = { name: unknown , dateOfBirth: unknown, gender : unknown, ssn: unknown, occupation: unknown, entries: Entry[] };
 
-const toNewPatientEntry = ({name, dateOfBirth, gender, ssn, occupation} : Fields): NewPatientEntry => {
+const toNewPatientEntry = ({name, dateOfBirth, gender, ssn, occupation, entries} : Fields): NewPatientEntry => {
     const newPatient: NewPatientEntry = {
     name: parseName(name),
     dateOfBirth: parseDateOfBirth(dateOfBirth),
     gender: parseGender(gender),
     ssn: parseSsn(ssn),
     occupation: parseOccupation(occupation),
+    entries: entries
     };
     return newPatient;
 };

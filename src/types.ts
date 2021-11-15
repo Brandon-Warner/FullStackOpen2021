@@ -14,15 +14,15 @@ export enum Gender {
 export interface Entry{
 }
 
-export interface Patient {
-    id: string;
-    name: string;
-    ssn: string;
-    occupation?: string;
-    gender: Gender;
-    dateOfBirth: string;
-    entries: Entry[];
-}
+// export interface Patient {
+//     id: string;
+//     name: string;
+//     ssn: string;
+//     occupation?: string;
+//     gender: Gender;
+//     dateOfBirth: string;
+//     entries: Entry[];
+// }
 
 export interface Patients {
     id: string;
@@ -31,10 +31,11 @@ export interface Patients {
     gender: Gender;
     ssn?: string;
     occupation?: string;
+    entries: Entry[];
 }
 
 export type NonSensitiveInfoPatients = Omit<Patients, 'ssn'>;
 
 export type NewPatientEntry = Omit<Patients, 'id'>;
 
-export type PublicPatient = Omit<Patient, 'ssn' | 'entries' >;
+export type PublicPatient = Omit<Patients, 'ssn' | 'entries' >;
