@@ -40,6 +40,9 @@ const App = () => {
             <Route path="/">
               <PatientListPage />
             </Route>
+            <Route path='/patients/:id'>
+              
+            </Route>
           </Switch>
         </Container>
       </Router>
