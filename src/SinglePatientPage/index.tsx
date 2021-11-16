@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Patient } from '../types';
+import { Entry, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue, setFetchedPatient } from '../state';
 import { useParams } from 'react-router';
@@ -61,7 +61,7 @@ const SinglePatientPage: React.FC = () => {
         <div>
             <b>Entries: </b>
             <ul>
-                {patient?.entries.map(e => (
+                {patient?.entries.map((e: Entry) => (
                     <li key={Math.random()}>{e}</li>
                 )
                 )}

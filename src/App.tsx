@@ -20,6 +20,7 @@ const App = () => {
         const { data: patientListFromApi } = await axios.get<Patient[]>(
           `${apiBaseUrl}/patients`
         );
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
