@@ -46,6 +46,27 @@ const SinglePatientPage: React.FC = () => {
                 <div>{error}</div>
             )}
         <h1>{patient?.name}</h1>
+        <div>
+            <b>SSN: </b>{patient?.ssn}
+        </div>
+        <div>
+            <b>Occupation: </b>{patient?.occupation}
+        </div>
+        <div>
+            <b>Gender: </b>{patient?.gender}
+        </div>
+        <div>
+            <b>Date of Birth: </b>{patient?.dateOfBirth}
+        </div>
+        <div>
+            <b>Entries: </b>
+            <ul>
+                {patient?.entries.map(e => (
+                    <li key={Math.random()}>{e}</li>
+                )
+                )}
+            </ul>
+        </div>
         </div>
         
     );
