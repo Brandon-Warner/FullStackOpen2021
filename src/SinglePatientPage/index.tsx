@@ -1,15 +1,19 @@
 import React from 'react';
 import axios from 'axios';
-import { Entry, Patient } from '../types';
+import {  Entry, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue, setFetchedPatient } from '../state';
 import { useParams } from 'react-router';
+import EntryList from './EntryList';
+
+// import  EntryList  from './EntryList';
 
 
 const SinglePatientPage: React.FC = () => {
     const [{ fullPatientInfo }, dispatch] = useStateValue();
     const { id } = useParams<{ id: string }>();
     const [patient, setPatient] = React.useState<Patient | undefined>();
+    console.log('patient: ', patient);
     const [error, setError] = React.useState<string | undefined>();
 
     const setErrorMessage = (message: string) => {
@@ -59,13 +63,11 @@ const SinglePatientPage: React.FC = () => {
             <b>Date of Birth: </b>{patient?.dateOfBirth}
         </div>
         <div>
-            <b>Entries: </b>
-            <ul>
-                {patient?.entries.map((e: Entry) => (
-                    <li key={Math.random()}>{e}</li>
-                )
-                )}
-            </ul>
+            <br />
+            <h3>Entries: </h3>
+            {patient?.entries.map((e: Entry) => (
+                <EntryList key={Math.random()*100} entry={e} />
+            ))}
         </div>
         </div>
         
