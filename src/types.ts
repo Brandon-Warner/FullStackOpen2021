@@ -24,7 +24,7 @@ export interface Entry{
 //     entries: Entry[];
 // }
 
-export interface Patients {
+export interface Patient {
     id: string;
     name: string;
     dateOfBirth: string;
@@ -34,8 +34,8 @@ export interface Patients {
     entries: Entry[];
 }
 
-export type NonSensitiveInfoPatients = Omit<Patients, 'ssn'>;
+export type NonSensitiveInfoPatients = Omit<Patient, 'ssn'>;
 
-export type NewPatientEntry = Omit<Patients, 'id'>;
+export type NewPatientEntry = Omit<Patient, 'id'>;
 
-export type PublicPatient = Omit<Patients, 'ssn' | 'entries' >;
+export type PublicPatient = Omit<Patient, 'ssn' | 'entries' >;

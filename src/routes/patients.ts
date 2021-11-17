@@ -19,6 +19,7 @@ router.post('/', (req, res) => {
         
         const newPatient = toNewPatientEntry(req.body);
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const addedPatient = patientsService.addPatient(newPatient);
         res.json(addedPatient);
     } catch (error: unknown) {
