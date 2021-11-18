@@ -1,16 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import {  Entry, Patient } from '../types';
+import {  Diagnosis, Entry, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
-import { useStateValue, setFetchedPatient } from '../state';
+import { useStateValue, setFetchedPatient, setDiagnosisList } from '../state';
 import { useParams } from 'react-router';
 import EntryList from './EntryList';
 
-// import  EntryList  from './EntryList';
+
 
 
 const SinglePatientPage: React.FC = () => {
-    const [{ fullPatientInfo }, dispatch] = useStateValue();
+    const [{ fullPatientInfo, diagnosisList }, dispatch] = useStateValue();
     const { id } = useParams<{ id: string }>();
     const [patient, setPatient] = React.useState<Patient | undefined>();
     console.log('patient: ', patient);
@@ -37,12 +37,36 @@ const SinglePatientPage: React.FC = () => {
                 setErrorMessage(errorMessage);
               }
         };
+
+        const fetchDiagnosisList = async () => {
+            try {
+                const { data: diagnosisList } = await axios.get<Diagnosis[]>(
+                    `${apiBaseUrl}/diagnosis`
+                );
+                dispatch(setDiagnosisList(diagnosisList));
+            } catch (error: unknown) {
+                let errorMessage = 'something went wrong';
+                if(error instanceof Error) {
+                    errorMessage = error.message;
+                }
+                setErrorMessage(errorMessage);
+            }
+        };
+
         if (fullPatientInfo[id]) {
             setPatient(fullPatientInfo[id]);
         } else {
             void getPatient();
         }
-    });
+
+        if (Object.values(diagnosisList).length === 0) {
+            void fetchDiagnosisList();
+        }
+    }, [dispatch, id, fullPatientInfo, diagnosisList]);
+
+    if (!patient || !diagnosisList) {
+        return <div>Loading ...</div>;
+    }
 
     return (
         <div>
