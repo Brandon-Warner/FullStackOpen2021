@@ -2,7 +2,7 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
-import diagnosesRouter from './routes/diagnoses';
+import diagnosisRouter from './routes/diagnoses';
 import patientsRouter from './routes/patients';
 
 
@@ -13,7 +13,7 @@ app.get('/ping', (_req, res) => {
     res.send('pong');
 });
 
-app.use('/api/diagnoses', diagnosesRouter);
+app.use('/api/diagnosis', diagnosisRouter);
 
 app.use('/api/patients', patientsRouter);
 
