@@ -1,6 +1,11 @@
 import React from 'react';
 import { Entry, HealthCheckEntry, HospitalEntry, OccupationalHealthcareEntry } from '../types';
 
+const assertNever = (value: never): never => {
+    throw new Error(
+        `Unhandled discriminated union member: ${JSON.stringify(value)}`
+    );
+};
 
 
 const Hospital: React.FC<{entry: HospitalEntry}> = ({entry}) => {
@@ -85,7 +90,7 @@ const EntryList: React.FC<{entry: Entry}> = ({entry}) => {
         case "OccupationalHealthcare":
            return <OccupationalHealthcare entry={entry} />;
         default: 
-        return null;    
+        return assertNever(entry);    
     }
 
 };

@@ -13,6 +13,8 @@ const SinglePatientPage: React.FC = () => {
     const [{ fullPatientInfo, diagnosisList }, dispatch] = useStateValue();
     const { id } = useParams<{ id: string }>();
     const [patient, setPatient] = React.useState<Patient | undefined>();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [diagnoses, setDiagnoses] = React.useState<Diagnosis[] | undefined>();
     console.log('patient: ', patient);
     const [error, setError] = React.useState<string | undefined>();
 
@@ -44,6 +46,7 @@ const SinglePatientPage: React.FC = () => {
                     `${apiBaseUrl}/diagnosis`
                 );
                 dispatch(setDiagnosisList(diagnosisList));
+                setDiagnoses(diagnosisList);
             } catch (error: unknown) {
                 let errorMessage = 'something went wrong';
                 if(error instanceof Error) {
